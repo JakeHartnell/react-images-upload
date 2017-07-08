@@ -3,8 +3,8 @@
 }
 
 .fileContainer {
-	background: #fff;
-	box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
+	background: #f7f7f9;
+	box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
 	position: relative;
 	border-radius: 10px;
 	padding: 20px 0;
@@ -14,6 +14,7 @@
 	flex-direction: column;
 	margin: 10px auto;
 	transition: all 0.3s ease-in;
+	max-width: 460px;
 }
 
 .fileContainer input {
@@ -74,7 +75,7 @@
 .fileContainer .uploadIcon {
 	width: 50px;
 	height: 50px;
-	background: url(./UploadIcon.svg);
+	background: url(UploadIcon.svg);
 	-webkit-background-size: cover;
 	background-size: cover;
 }
