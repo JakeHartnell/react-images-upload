@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactImageUploadComponent from './component/ReactImageUploadComponent';
+import App from './App';
+import './app.css'
 
-ReactDOM.render(<ReactImageUploadComponent />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

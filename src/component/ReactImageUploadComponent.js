@@ -151,7 +151,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 			return (
 				<div key={index} className="uploadPictureContainer">
 					<div className="deleteImage" onClick={() => this.removeImage(picture)}>X</div>
-					<img src={picture} className="uploadPicture" alt="preview"/>
+					<img src={picture} className="uploadPicture"/>
 				</div>
 			);
 		});
@@ -159,7 +159,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 
 	render() {
 		return (
-			<div className="fileUploader">
+			<div className="fileUploader" style={this.props.style}>
 				<div className="fileContainer">
 					{this.renderIcon()}
 					{this.renderLabel()}
@@ -206,10 +206,12 @@ ReactImageUploadComponent.defaultProps = {
 	fileSizeError: " file size is too big",
 	fileTypeError: " is not supported file extension",
 	errorClass: "",
+	style: {},
 	errorStyle: {}
 };
 
 ReactImageUploadComponent.PropTypes = {
+	style: PropTypes.string,
 	className: PropTypes.string,
 	onChange: PropTypes.func,
 	buttonClassName: PropTypes.object,
