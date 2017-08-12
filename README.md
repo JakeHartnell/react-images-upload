@@ -7,14 +7,14 @@ This package use ['react-flip-move'](https://github.com/joshwcomeau/react-flip-m
 ## Installation
 
 ```bash
-npm install --save react-image-upload
+npm install --save react-images-upload
 ```
 
 ## Usage
 
 ```javascript
 import React from 'react';
-import ImageUploader from 'react-image-upload';
+import ImageUploader from 'react-images-upload';
 
 class App extends React.Component {
 

@@ -1,10 +1,10 @@
 {
-  "name": "react-image-upload",
+  "name": "react-images-upload",
   "version": "0.1.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/baaraak/react-image-upload.git"
+    "url": "git://github.com/baaraak/react-images-upload.git"
   },
   "dependencies": {
     "autoprefixer": "7.1.1",
