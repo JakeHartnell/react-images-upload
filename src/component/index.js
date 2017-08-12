@@ -35,12 +35,12 @@ class ReactImageUploadComponent extends React.PureComponent {
 	 Handle file validation
 	 */
 	onDropFile(e) {
-		// If callback giving, fire.
-		if (typeof this.props.onChange === "function") {
-			this.props.onChange(e);
-		}
 		const files = e.target.files;
 		const _this = this;
+		// If callback giving, fire.
+		if (typeof this.props.onChange === "function") {
+			this.props.onChange(files);
+		}
 		// Iterate over all uploaded files
 		for (let i = 0, f; f = files[i]; i++) {
 			// Check for file extension
@@ -59,7 +59,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 			}
 
 			const reader = new FileReader();
-			// Read the image via FileReader API and save image result in store.
+			// Read the image via FileReader API and save image result in state.
 			reader.onload = (function () {
 				return function (e) {
 					if (_this.state.pictures.indexOf(e.target.result) === -1) {
@@ -103,7 +103,6 @@ class ReactImageUploadComponent extends React.PureComponent {
 	 */
 	removeImage(picture) {
 		const filteredAry = this.state.pictures.filter((e) => e !== picture);
-		console.log(filteredAry);
 		this.setState({pictures: filteredAry})
 	}
 
@@ -151,7 +150,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 			return (
 				<div key={index} className="uploadPictureContainer">
 					<div className="deleteImage" onClick={() => this.removeImage(picture)}>X</div>
-					<img src={picture} className="uploadPicture"/>
+					<img src={picture} className="uploadPicture" alt="preview"/>
 				</div>
 			);
 		});

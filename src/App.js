@@ -1,7 +1,7 @@
 import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { rainbow } from 'react-syntax-highlighter/dist/styles';
-import ImageUploader from './component/ReactImageUploadComponent';
+import ImageUploader from './component/index';
 
 const steps = {
     one: `npm install --save react-image-upload`,
@@ -25,11 +25,11 @@ class App extends React.Component {
     render() {
         return (
             <ImageUploader
-                withIcon: true
-                buttonText: 'Choose images'
+                withIcon={true}
+                buttonText='Choose images'
                 onChange={this.onDrop}
-                imgExtension: ['.jpg', '.gif', '.png', '.gif']
-                maxFileSize: 5242880
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={5242880}
             />
         );
     }
@@ -38,14 +38,13 @@ class App extends React.Component {
 
 
 export default class App extends React.PureComponent {
-
     render() {
         return (
             <div className="page">
                 <h1>React-image-upload</h1>
                 <p>Simple component for upload and validate (client side) images with preview built with React.js.</p>
                 <div className="head">Demo</div>
-                <ImageUploader style={{ maxWidth: '500px', margin: "20px auto" }} />
+                <ImageUploader style={{ maxWidth: '500px', margin: "20px auto" }}/>
                 <div className="head">Installation</div>
                 <SyntaxHighlighter language='javascript' showLineNumbers={true} style={rainbow}>
                     {steps.one}
@@ -105,7 +104,7 @@ export default class App extends React.PureComponent {
                         <tr>
                             <td className="text-left">accept</td>
                             <td className="text-left">String</td>
-                            <td className="text-left">"accept=image/*"</td>
+                            <td className="text-left">"accept=image"</td>
                             <td className="text-left">Accept attribute for file input.
 </td>
                         </tr>
