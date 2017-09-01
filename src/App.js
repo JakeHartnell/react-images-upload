@@ -4,9 +4,9 @@ import { rainbow } from 'react-syntax-highlighter/dist/styles';
 import ImageUploader from './component/index';
 
 const steps = {
-    one: `npm install --save react-image-upload`,
+    one: `npm install --save react-images-upload`,
     two: `import React from 'react';
-import ImageUploader from 'react-image-upload';
+import ImageUploader from 'react-images-upload';
 
 class App extends React.Component {
 	
@@ -41,7 +41,7 @@ export default class App extends React.PureComponent {
     render() {
         return (
             <div className="page">
-                <h1>React-image-upload</h1>
+                <h1>React-images-upload</h1>
                 <p>Simple component for upload and validate (client side) images with preview built with React.js.</p>
                 <div className="head">Demo</div>
                 <ImageUploader style={{ maxWidth: '500px', margin: "20px auto" }}/>
