@@ -180,7 +180,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 						accept={this.props.accept}
 						className={this.props.className}
 					/>
-					{this.renderPreview()}
+					{ this.props.withPreview ? this.renderPreview() : null }
 				</div>
 			</div>
 		)

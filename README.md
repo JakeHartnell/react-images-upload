@@ -52,7 +52,7 @@ class App extends React.Component {
 | onChange | Function | - | On change handler for the input. |
 | buttonClassName | String | - | Class name for upload button. |
 | buttonStyles | Object | - | Inline styles for upload button. |
-| withPreview | Boolean | true | Show preview of selected images. |
+| withPreview | Boolean | false | Show preview of selected images. |
 | accept | String | "accept=image/*" | Accept attribute for file input. |
 | name | String | - | Input name. |
 | withIcon | Boolean | true | If true, show upload icon on top |
