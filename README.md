@@ -1,4 +1,7 @@
-#[Demo](https://ancient-refuge-49866.herokuapp.com)
+## Hey, Due to lack of time I have to close this repo.
+## If someone wants to take ownership on this repo, contact me and I will transfer the ownership.
+
+# [Demo](https://ancient-refuge-49866.herokuapp.com)
 
 # Images uploader UI component
 Simple component for upload and validate (client side) images with preview built with React.js.
