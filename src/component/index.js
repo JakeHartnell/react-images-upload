@@ -197,10 +197,10 @@ ReactImageUploadComponent.defaultProps = {
 	withIcon: true,
 	buttonText: "Choose images",
 	withLabel: true,
-	label: "Max file size: 5mb, accepted: jpg|gif|png|gif",
+	label: "Max file size: 5mb, accepted: jpg|gif|png",
 	labelStyles: {},
 	labelClass: "",
-	imgExtension: ['.jpg', '.gif', '.png', '.gif'],
+	imgExtension: ['.jpg', '.gif', '.png'],
 	maxFileSize: 5242880,
 	fileSizeError: " file size is too big",
 	fileTypeError: " is not supported file extension",
@@ -209,10 +209,11 @@ ReactImageUploadComponent.defaultProps = {
 	errorStyle: {}
 };
 
-ReactImageUploadComponent.PropTypes = {
+ReactImageUploadComponent.propTypes = {
 	style: PropTypes.string,
 	className: PropTypes.string,
 	onChange: PropTypes.func,
+  onDelete: PropTypes.func,
 	buttonClassName: PropTypes.object,
 	buttonStyles: PropTypes.object,
 	withPreview: PropTypes.bool,
@@ -231,4 +232,5 @@ ReactImageUploadComponent.PropTypes = {
 	errorClass: PropTypes.string,
 	errorStyle: PropTypes.object
 };
+
 export default ReactImageUploadComponent;
