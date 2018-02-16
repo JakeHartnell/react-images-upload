@@ -42,7 +42,8 @@ class ReactImageUploadComponent extends React.PureComponent {
 			this.props.onChange(files);
 		}
 		// Iterate over all uploaded files
-		for (let i = 0, f; f = files[i]; i++) {
+		for (let i = 0; i < files.length; i++) {
+      let f = files[i];
 			// Check for file extension
 			if (!this.hasExtension(f.name)) {
 				const newArray = _this.state.notAcceptedFileType.slice();

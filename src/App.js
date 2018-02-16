@@ -44,7 +44,7 @@ export default class App extends React.PureComponent {
                 <h1>React-images-upload</h1>
                 <p>Simple component for upload and validate (client side) images with preview built with React.js.</p>
                 <div className="head">Demo</div>
-                <ImageUploader style={{ maxWidth: '500px', margin: "20px auto" }}/>
+                <ImageUploader />
                 <div className="head">Installation</div>
                 <SyntaxHighlighter language='javascript' showLineNumbers={true} style={rainbow}>
                     {steps.one}
@@ -76,7 +76,13 @@ export default class App extends React.PureComponent {
                             <td className="text-left">-</td>
                             <td className="text-left">On change handler for the input.</td>
                         </tr>
-                        <tr>
+                         <tr>
+                            <td className="text-left">onDelete</td>
+                            <td className="text-left">Function</td>
+                            <td className="text-left">-</td>
+                            <td className="text-left">On delete handler for the image.</td>
+                        </tr>
+                       <tr>
                             <td className="text-left">buttonClassName</td>
                             <td className="text-left">String</td>
                             <td className="text-left">-</td>
