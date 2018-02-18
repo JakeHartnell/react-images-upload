@@ -1,19 +1,19 @@
 {
   "name": "react-images-upload",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "repository": {
-	"type": "git",
-	"url": "git://github.com/baaraak/react-image-upload.git"
+	  "type": "git",
+	  "url": "git://github.com/jakehartnell/react-image-upload.git"
   },
   "dependencies": {
-	"react": "^15.6.1",
-	"react-flip-move": "^2.9.14"
+	  "react": "^16.20.0",
+	  "react-flip-move": "^3.0.1"
   },
   "scripts": {
-	"start": "node scripts/start.js",
-	"build": "node scripts/build.js",
-	"test": "node scripts/test.js --env=jsdom",
-	"npm_transpile": "SET NODE_ENV=production& babel src/component --out-dir dist"
+	  "start": "node scripts/start.js",
+	  "build": "node scripts/build.js",
+	  "test": "node scripts/test.js --env=jsdom",
+	  "npm_transpile": "SET NODE_ENV=production& babel src/component --out-dir dist"
   }
 }

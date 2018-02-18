@@ -211,7 +211,7 @@ ReactImageUploadComponent.defaultProps = {
 };
 
 ReactImageUploadComponent.propTypes = {
-	style: PropTypes.string,
+	style: PropTypes.object,
 	className: PropTypes.string,
 	onChange: PropTypes.func,
   onDelete: PropTypes.func,

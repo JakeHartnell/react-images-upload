@@ -44,7 +44,8 @@ export default class App extends React.PureComponent {
                 <h1>React-images-upload</h1>
                 <p>Simple component for upload and validate (client side) images with preview built with React.js.</p>
                 <div className="head">Demo</div>
-                <ImageUploader />
+                <ImageUploader style={{ maxWidth: '500px', margin: "20px auto" }}
+                               withPreview={true} />
                 <div className="head">Installation</div>
                 <SyntaxHighlighter language='javascript' showLineNumbers={true} style={rainbow}>
                     {steps.one}
