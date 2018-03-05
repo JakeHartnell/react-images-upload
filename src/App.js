@@ -9,7 +9,7 @@ const steps = {
 import ImageUploader from 'react-images-upload';
 
 class App extends React.Component {
-	
+
     constructor(props) {
         super(props);
         this.state = { pictures: [] };
@@ -93,8 +93,7 @@ export default class App extends React.PureComponent {
                             <td className="text-left">buttonStyles</td>
                             <td className="text-left">Object</td>
                             <td className="text-left">-</td>
-                            <td className="text-left">Inline styles for upload button.
-</td>
+                            <td className="text-left">Inline styles for upload button.</td>
                         </tr>
                         <tr>
                             <td className="text-left">withPreview</td>
@@ -112,50 +111,43 @@ export default class App extends React.PureComponent {
                             <td className="text-left">accept</td>
                             <td className="text-left">String</td>
                             <td className="text-left">"accept=image"</td>
-                            <td className="text-left">Accept attribute for file input.
-</td>
+                            <td className="text-left">Accept attribute for file input.</td>
                         </tr>
                         <tr>
                             <td className="text-left">name</td>
                             <td className="text-left">String</td>
                             <td className="text-left">-</td>
-                            <td className="text-left">Input name.
-</td>
+                            <td className="text-left">Input name.</td>
                         </tr>
                         <tr>
                             <td className="text-left">withIcon</td>
                             <td className="text-left">Boolean</td>
                             <td className="text-left">true</td>
-                            <td className="text-left">If true, show upload icon on top
-</td>
+                            <td className="text-left">If true, show upload icon on top</td>
                         </tr>
                         <tr>
                             <td className="text-left">buttonText</td>
                             <td className="text-left">String</td>
                             <td className="text-left">'Choose images'	</td>
-                            <td className="text-left">The text that display in the button.
-</td>
+                            <td className="text-left">The text that display in the button.</td>
                         </tr>
                         <tr>
                             <td className="text-left">withLabel</td>
                             <td className="text-left">Boolean</td>
                             <td className="text-left">true</td>
-                            <td className="text-left">Show instruction label
-</td>
+                            <td className="text-left">Show instruction label</td>
                         </tr>
                         <tr>
                             <td className="text-left">labelStyles</td>
                             <td className="text-left">Object</td>
                             <td className="text-left">-</td>
-                            <td className="text-left">Inline styles for the label.
-</td>
+                            <td className="text-left">Inline styles for the label.</td>
                         </tr>
                         <tr>
                             <td className="text-left">labelClass</td>
                             <td className="text-left">string</td>
                             <td className="text-left">-</td>
-                            <td className="text-left">Class name for the label
-</td>
+                            <td className="text-left">Class name for the label</td>
                         </tr>
                         <tr>
                             <td className="text-left">imgExtension</td>
@@ -173,30 +165,32 @@ export default class App extends React.PureComponent {
                             <td className="text-left">fileSizeError</td>
                             <td className="text-left">String</td>
                             <td className="text-left">" file size is too big"	</td>
-                            <td className="text-left">Label for file size error message.
-</td>
+                            <td className="text-left">Label for file size error message.</td>
                         </tr>
                         <tr>
                             <td className="text-left">fileTypeError</td>
                             <td className="text-left">String</td>
                             <td className="text-left">" is not supported file extension"</td>
-                            <td className="text-left">Label for file extension error message.
-</td>
+                            <td className="text-left">Label for file extension error message.</td>
                         </tr>
                         <tr>
                             <td className="text-left">errorClass</td>
                             <td className="text-left">String</td>
                             <td className="text-left">-</td>
                             <td className="text-left">Class for error messages
-
-</td>
+                            </td>
                         </tr>
                         <tr>
                             <td className="text-left">errorStyle</td>
                             <td className="text-left">Object</td>
                             <td className="text-left">['.jpg', '.gif', '.png', '.gif']</td>
-                            <td className="text-left">Inline styles for errors
-.</td>
+                            <td className="text-left">Inline styles for errors .</td>
+                        </tr>
+                    <tr>
+                            <td className="text-left">singleImage</td>
+                            <td className="text-left">Boolean</td>
+                            <td className="text-left">false</td>
+                            <td className="text-left">Limits one image at a time.</td>
                         </tr>
                     </tbody>
                 </table>
