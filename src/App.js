@@ -177,8 +177,7 @@ export default class App extends React.PureComponent {
                             <td className="text-left">errorClass</td>
                             <td className="text-left">String</td>
                             <td className="text-left">-</td>
-                            <td className="text-left">Class for error messages
-                            </td>
+                            <td className="text-left">Class for error messages</td>
                         </tr>
                         <tr>
                             <td className="text-left">errorStyle</td>
