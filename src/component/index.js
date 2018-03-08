@@ -43,7 +43,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 		}
 		// Iterate over all uploaded files
 		for (let i = 0; i < files.length; i++) {
-      let f = files[i];
+            let f = files[i];
 			// Check for file extension
 			if (!this.hasExtension(f.name)) {
 				const newArray = _this.state.notAcceptedFileType.slice();
@@ -63,7 +63,9 @@ class ReactImageUploadComponent extends React.PureComponent {
 			// Read the image via FileReader API and save image result in state.
 			reader.onload = (function () {
 				return function (e) {
-					if (_this.state.pictures.indexOf(e.target.result) === -1) {
+				    if (_this.props.singleImage === true) {
+                        _this.setState({ pictures: [e.target.result] });
+                    } else if (_this.state.pictures.indexOf(e.target.result) === -1) {
 						const newArray = _this.state.pictures.slice();
 						newArray.push(e.target.result);
 						_this.setState({pictures: newArray});
@@ -170,7 +172,8 @@ class ReactImageUploadComponent extends React.PureComponent {
 						className={"chooseFileButton " + this.props.buttonClassName}
 						style={this.props.buttonStyles}
 						onClick={this.triggerFileUpload}
-					>{this.props.buttonText}
+					>
+                        {this.props.buttonText}
 					</button>
 					<input
 						type="file"
@@ -207,14 +210,15 @@ ReactImageUploadComponent.defaultProps = {
 	fileTypeError: " is not supported file extension",
 	errorClass: "",
 	style: {},
-	errorStyle: {}
+	errorStyle: {},
+	singleImage: false
 };
 
 ReactImageUploadComponent.propTypes = {
 	style: PropTypes.object,
 	className: PropTypes.string,
 	onChange: PropTypes.func,
-  onDelete: PropTypes.func,
+    onDelete: PropTypes.func,
 	buttonClassName: PropTypes.object,
 	buttonStyles: PropTypes.object,
 	withPreview: PropTypes.bool,
@@ -231,7 +235,8 @@ ReactImageUploadComponent.propTypes = {
 	fileSizeError: PropTypes.string,
 	fileTypeError: PropTypes.string,
 	errorClass: PropTypes.string,
-	errorStyle: PropTypes.object
+	errorStyle: PropTypes.object,
+    singleImage: PropTypes.bool
 };
 
 export default ReactImageUploadComponent;
