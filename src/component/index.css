@@ -118,3 +118,11 @@
 	line-height: 15px;
 	cursor: pointer;
 }
+
+.flipMove {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
