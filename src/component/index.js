@@ -162,7 +162,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 
 	render() {
 		return (
-			<div className="fileUploader" style={this.props.style}>
+			<div className={"fileUploader " + this.props.className} style={this.props.style}>
 				<div className="fileContainer">
 					{this.renderIcon()}
 					{this.renderLabel()}
@@ -183,7 +183,6 @@ class ReactImageUploadComponent extends React.PureComponent {
 						multiple="multiple"
 						onChange={this.onDropFile}
 						accept={this.props.accept}
-						className={this.props.className}
 					/>
 					{ this.props.withPreview ? this.renderPreview() : null }
 				</div>
