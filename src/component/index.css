@@ -74,9 +74,6 @@
 .fileContainer .uploadIcon {
 	width: 50px;
 	height: 50px;
-	background: url(UploadIcon.svg);
-	-webkit-background-size: cover;
-	background-size: cover;
 }
 
 .fileContainer .uploadPicturesWrapper {

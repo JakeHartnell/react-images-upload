@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './index.css';
 import FlipMove from 'react-flip-move';
+import UploadIcon from './UploadIcon.svg';
 
 const styles = {
 	display: "flex",
@@ -82,7 +83,8 @@ class ReactImageUploadComponent extends React.PureComponent {
 	 */
 	renderIcon() {
 		if (this.props.withIcon) {
-			return <div className="uploadIcon"/>;
+			return <img src={UploadIcon} className="uploadIcon" 
+				alt="Upload Icon" />;
 		}
 	}
 
