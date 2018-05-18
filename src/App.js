@@ -1,7 +1,7 @@
 import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { rainbow } from 'react-syntax-highlighter/dist/styles';
-import ImageUploader from './component/index';
+import ImageUploader from './component/index.js';
+import { rainbow } from 'react-syntax-highlighter/styles/hljs';
 
 const steps = {
     one: `npm install --save react-images-upload`,

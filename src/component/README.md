@@ -66,9 +66,5 @@ class App extends React.Component {
 | errorClass | String | - | Class for error messages |
 | errorStyle | Object | - | Inline styles for errors |
 
-### Authors
-Barak Cohen (baaraak0@gmail.com)
-Jake Hartnell (Jake.Hartnell@gmail.com)
-
 ### License
 MIT
