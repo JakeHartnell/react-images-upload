@@ -24,9 +24,9 @@ class App extends React.Component {
 		 this.onDrop = this.onDrop.bind(this);
 	}
 
-	onDrop(picture) {
+	onDrop(pictureFiles, pictureDataURLs) {
 		this.setState({
-            pictures: this.state.pictures.concat(picture),
+            pictures: this.state.pictures.concat(pictureFiles),
         });
 	}
 
@@ -57,6 +57,7 @@ class App extends React.Component {
 | name | String | - | Input name. |
 | withIcon | Boolean | true | If true, show upload icon on top |
 | buttonText | String | 'Choose images' | The text that display in the button. |
+| buttonType | String | 'submit' | The value of the button's "type" attribute. |
 | withLabel | Boolean | true | Show instruction label |
 | label | String | 'Max file size: 5mb, accepted: jpg|gif|png|gif' | Label text |
 | labelStyles | Object | - | Inline styles for the label. |

@@ -16,9 +16,9 @@ class App extends React.Component {
         this.onDrop = this.onDrop.bind(this);
     }
 
-    onDrop(picture) {
+    onDrop(pictureFiles, pictureDataURLs) {
         this.setState({
-            pictures: this.state.pictures.concat(picture),
+            pictures: this.state.pictures.concat(pictureFiles),
         });
     }
 
@@ -130,6 +130,12 @@ export default class App extends React.PureComponent {
                             <td className="text-left">String</td>
                             <td className="text-left">'Choose images'	</td>
                             <td className="text-left">The text that display in the button.</td>
+                        </tr>
+                        <tr>
+                            <td className="text-left">buttonType</td>
+                            <td className="text-left">String</td>
+                            <td className="text-left">'submit'	</td>
+                            <td className="text-left">The value of the button's type attribute</td>
                         </tr>
                         <tr>
                             <td className="text-left">withLabel</td>
