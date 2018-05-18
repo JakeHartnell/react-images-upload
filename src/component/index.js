@@ -135,7 +135,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 		if (this.state.notAcceptedFileType.length > 0) {
 			notAccepted = this.state.notAcceptedFileType.map((error, index) => {
 				return (
-					<div className={'errorMessage' + this.props.errorClass} key={index} style={this.props.errorStyle}>
+					<div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
 						* {error} {this.props.fileTypeError}
 					</div>
 				)
@@ -144,7 +144,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 		if (this.state.notAcceptedFileSize.length > 0) {
 			notAccepted = this.state.notAcceptedFileSize.map((error, index) => {
 				return (
-					<div className={'errorMessage' + this.props.errorClass} key={index} style={this.props.errorStyle}>
+					<div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
 						* {error} {this.props.fileSizeError}
 					</div>
 				)
