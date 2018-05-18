@@ -91,14 +91,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 90px;
+	height: inherit;
 	box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 	border: 1px solid #d0dbe4;
 	position: relative;
 }
 
 .fileContainer .uploadPictureContainer img.uploadPicture {
-	width: 40%;
+	width: 100%;
 }
 
 .fileContainer .deleteImage {
