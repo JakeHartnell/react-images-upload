@@ -211,7 +211,7 @@ class ReactImageUploadComponent extends React.PureComponent {
 
 ReactImageUploadComponent.defaultProps = {
 	className: '',
-	buttonClassName: {},
+	buttonClassName: "",
 	buttonStyles: {},
 	withPreview: false,
 	accept: "accept=image/*",
@@ -239,7 +239,7 @@ ReactImageUploadComponent.propTypes = {
 	className: PropTypes.string,
 	onChange: PropTypes.func,
   onDelete: PropTypes.func,
-	buttonClassName: PropTypes.object,
+	buttonClassName: PropTypes.string,
 	buttonStyles: PropTypes.object,
     buttonType: PropTypes.string,
 	withPreview: PropTypes.bool,
