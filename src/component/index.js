@@ -214,7 +214,7 @@ ReactImageUploadComponent.defaultProps = {
 	buttonClassName: "",
 	buttonStyles: {},
 	withPreview: false,
-	accept: "accept=image/*",
+	accept: "image/*",
 	name: "",
 	withIcon: true,
 	buttonText: "Choose images",
