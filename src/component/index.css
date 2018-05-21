@@ -105,15 +105,16 @@
 	position: absolute;
 	top: -9px;
 	right: -9px;
-	font-size: 8px;
 	color: #fff;
 	background: #ff4081;
 	border-radius: 50%;
-	width: 15px;
-	height: 15px;
 	text-align: center;
-	line-height: 15px;
 	cursor: pointer;
+	font-size: 26px;
+	font-weight: bold;
+	line-height: 30px;
+	width: 30px;
+	height: 30px;
 }
 
 .flipMove {
