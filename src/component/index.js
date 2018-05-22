@@ -12,7 +12,7 @@ const styles = {
 	width: "100%"
 };
 
-class ReactImageUploadComponent extends React.PureComponent {
+class ReactImageUploadComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -78,13 +78,12 @@ class ReactImageUploadComponent extends React.PureComponent {
 		}
 	}
 
-	/*
-	 Render the upload icon
-	 */
-	renderIcon() {
+  /*
+   Render the upload icon
+   */
+  renderIcon() {
 		if (this.props.withIcon) {
-			return <img src={UploadIcon} className="uploadIcon" 
-				alt="Upload Icon" />;
+      return <img src={UploadIcon} className="uploadIcon"	alt="Upload Icon" />;
 		}
 	}
 
@@ -93,11 +92,11 @@ class ReactImageUploadComponent extends React.PureComponent {
 	 */
 	renderLabel() {
 		if (this.props.withLabel) {
-			return <p className={this.props.labelClass} style={this.props.labelStyles}>{this.props.label}</p>
+		  return <p className={this.props.labelClass} style={this.props.labelStyles}>{this.props.label}</p>
 		}
 	}
 
-	/*
+  /*
 	 Check file extension (onDropFile)
 	 */
 	hasExtension(fileName) {

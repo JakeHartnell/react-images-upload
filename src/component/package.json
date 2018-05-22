@@ -1,20 +1,26 @@
 {
   "name": "react-images-upload",
-  "version": "1.0.7",
+  "version": "1.0.95",
   "private": false,
+  "main": "compiled.js",
   "repository": {
-	  "type": "git",
-	  "url": "https://github.com/jakehartnell/react-images-upload"
+    "type": "git",
+    "url": "https://github.com/jakehartnell/react-images-upload"
   },
   "dependencies": {
-	  "react": "^16.2.0",
-	  "react-flip-move": "^3.0.1"
+    "react": "^16.2.0",
+    "react-flip-move": "^3.0.1"
   },
   "scripts": {
-	  "start": "node scripts/start.js",
-	  "build": "node scripts/build.js",
-	  "test": "node scripts/test.js --env=jsdom",
-	  "npm_transpile": "SET NODE_ENV=production& babel src/component --out-dir dist"
+    "prepublishOnly": "npm run transpile",
+    "transpile": "babel index.js --out-file compiled.js"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react",
+      "stage-2"
+    ]
   },
   "keywords": [
     "image",
@@ -22,5 +28,16 @@
     "file",
     "react image upload"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1"
+  }
 }

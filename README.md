@@ -68,8 +68,8 @@ class App extends React.Component {
 | errorClass | String | - | Class for error messages |
 | errorStyle | Object | - | Inline styles for errors |
 
-### Author
-Barak Cohen (baaraak0@gmail.com)
+### Development
+Make sure you have [yarn](https://yarnpkg.com/en/) installed. Clone the repo and run `yarn`.
 
 ### License
 MIT
