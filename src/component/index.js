@@ -217,7 +217,7 @@ ReactImageUploadComponent.defaultProps = {
 	name: "",
 	withIcon: true,
 	buttonText: "Choose images",
-    buttonType: "submit",
+    buttonType: "button",
 	withLabel: true,
 	label: "Max file size: 5mb, accepted: jpg|gif|png",
 	labelStyles: {},
