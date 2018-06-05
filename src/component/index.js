@@ -26,6 +26,15 @@ class ReactImageUploadComponent extends React.Component {
 		this.triggerFileUpload = this.triggerFileUpload.bind(this);
 	}
 
+  /*
+   Load image at the beggining if defaultImage prop existe
+   */
+  componentWillReceiveProps(){
+    if(this.props.defaultImage){
+      this.setState({pictures: [this.props.defaultImage]});
+    }
+  }
+
 	/*
 	 On button click, trigger input file to open
 	 */
@@ -230,7 +239,8 @@ ReactImageUploadComponent.defaultProps = {
 	style: {},
 	errorStyle: {},
 	singleImage: false,
-    onChange: () => {}
+    onChange: () => {},
+  defaultImage: ""
 };
 
 ReactImageUploadComponent.propTypes = {
@@ -256,7 +266,8 @@ ReactImageUploadComponent.propTypes = {
 	fileTypeError: PropTypes.string,
 	errorClass: PropTypes.string,
 	errorStyle: PropTypes.object,
-  singleImage: PropTypes.bool
+  singleImage: PropTypes.bool,
+  defaultImage: PropTypes.string
 };
 
 export default ReactImageUploadComponent;
