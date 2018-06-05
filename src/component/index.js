@@ -197,7 +197,7 @@ class ReactImageUploadComponent extends React.Component {
 						type="file"
 						ref={input => this.inputElement = input}
 						name={this.props.name}
-						multiple="multiple"
+						multiple={!this.props.singleImage}
 						onChange={this.onDropFile}
 						accept={this.props.accept}
 					/>
