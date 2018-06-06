@@ -27,8 +27,8 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
-  Load image at the beggining if defaultImage prop existe
-  */
+   Load image at the beggining if defaultImage prop existe
+   */
   componentWillReceiveProps() {
     if (this.props.defaultImage) {
       this.setState({ pictures: [this.props.defaultImage] });
@@ -36,15 +36,24 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
-  On button click, trigger input file to open
-  */
+   Load image at the beggining if defaultImage prop existe
+   */
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.files !== this.state.files) {
+      this.props.onChange(this.state.files, this.state.pictures);
+    }
+  }
+
+  /*
+   On button click, trigger input file to open
+   */
   triggerFileUpload() {
     this.inputElement.click();
   }
 
   /*
-  Handle file validation
-  */
+   Handle file validation
+   */
   onDropFile(e) {
     const files = e.target.files;
     const _this = this;
@@ -76,9 +85,7 @@ class ReactImageUploadComponent extends React.Component {
           dataURL = dataURL.replace(";base64", `;name=${f.name};base64`);
 
           if (_this.props.singleImage === true) {
-            _this.setState({ pictures: [dataURL], files: [f] }, () => {
-              _this.props.onChange(_this.state.files, _this.state.pictures);
-            });
+            _this.setState({ pictures: [dataURL], files: [f] });
           } else if (_this.state.pictures.indexOf(dataURL) === -1) {
             const newArray = _this.state.pictures.slice();
             newArray.push(dataURL);
@@ -86,9 +93,7 @@ class ReactImageUploadComponent extends React.Component {
             const newFiles = _this.state.files.slice();
             newFiles.push(f);
 
-            _this.setState({ pictures: newArray, files: newFiles }, () => {
-              _this.props.onChange(_this.state.files, _this.state.pictures);
-            });
+            _this.setState({ pictures: newArray, files: newFiles });
           }
         };
       }(f);
@@ -97,8 +102,8 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
-  Render the upload icon
-  */
+   Render the upload icon
+   */
   renderIcon() {
     if (this.props.withIcon) {
       return React.createElement('img', { src: UploadIcon, className: 'uploadIcon', alt: 'Upload Icon' });
@@ -106,8 +111,8 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
-  Render label
-  */
+   Render label
+   */
   renderLabel() {
     if (this.props.withLabel) {
       return React.createElement(
@@ -119,16 +124,16 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
- Check file extension (onDropFile)
- */
+  Check file extension (onDropFile)
+  */
   hasExtension(fileName) {
     const pattern = '(' + this.props.imgExtension.join('|').replace(/\./g, '\\.') + ')$';
     return new RegExp(pattern, 'i').test(fileName);
   }
 
   /*
-  Remove the image from state
-  */
+   Remove the image from state
+   */
   removeImage(picture) {
     const removeIndex = this.state.pictures.findIndex(e => e === picture);
     const filteredPictures = this.state.pictures.filter((e, index) => index !== removeIndex);
@@ -140,8 +145,8 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
-  Check if any errors && render
-  */
+   Check if any errors && render
+   */
   renderErrors() {
     let notAccepted = '';
     if (this.state.notAcceptedFileType.length > 0) {
@@ -172,8 +177,8 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
-  Render preview images
-  */
+   Render preview images
+   */
   renderPreview() {
     return React.createElement(
       'div',
