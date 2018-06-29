@@ -66,11 +66,7 @@ class ReactImageUploadComponent extends React.Component {
                     let dataURL = e.target.result;
                     dataURL = dataURL.replace(";base64", `;name=${f.name};base64`);
 
-                    if (_this.props.singleImage === true) {
-                        _this.setState({pictures: [dataURL], files: [f]}, () => {
-                            _this.props.onChange(_this.state.files, _this.state.pictures);
-                        });
-                    } else if (_this.state.pictures.indexOf(dataURL) === -1) {
+                    if (_this.state.pictures.indexOf(dataURL) === -1) {
                         const newArray = _this.state.pictures.slice();
                         newArray.push(dataURL);
 
@@ -78,7 +74,11 @@ class ReactImageUploadComponent extends React.Component {
                         newFiles.push(f);
 
                         _this.setState({pictures: newArray, files: newFiles}, () => {
-                            _this.props.onChange(_this.state.files, _this.state.pictures);
+                            const isLastFile = i === files.length - 1;
+
+                            if (isLastFile) {
+                                _this.props.onChange(_this.state.files, _this.state.pictures);
+                            }
                         });
                     }
 				};
@@ -197,7 +197,7 @@ class ReactImageUploadComponent extends React.Component {
 						type="file"
 						ref={input => this.inputElement = input}
 						name={this.props.name}
-						multiple="multiple"
+                        multiple={!this.props.singleImage}
 						onChange={this.onDropFile}
 						accept={this.props.accept}
 					/>
