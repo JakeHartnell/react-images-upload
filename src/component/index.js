@@ -66,11 +66,7 @@ class ReactImageUploadComponent extends React.Component {
                     let dataURL = e.target.result;
                     dataURL = dataURL.replace(";base64", `;name=${f.name};base64`);
 
-                    if (_this.props.singleImage === true) {
-                        _this.setState({pictures: [dataURL], files: [f]}, () => {
-                            _this.props.onChange(_this.state.files, _this.state.pictures);
-                        });
-                    } else if (_this.state.pictures.indexOf(dataURL) === -1) {
+                    if (_this.state.pictures.indexOf(dataURL) === -1) {
                         const newArray = _this.state.pictures.slice();
                         newArray.push(dataURL);
 
