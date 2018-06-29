@@ -78,7 +78,11 @@ class ReactImageUploadComponent extends React.Component {
                         newFiles.push(f);
 
                         _this.setState({pictures: newArray, files: newFiles}, () => {
-                            _this.props.onChange(_this.state.files, _this.state.pictures);
+                            const isLastFile = i === files.length - 1;
+
+                            if (isLastFile) {
+                                _this.props.onChange(_this.state.files, _this.state.pictures);
+                            }
                         });
                     }
 				};
