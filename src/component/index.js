@@ -23,6 +23,7 @@ class ReactImageUploadComponent extends React.Component {
 		};
 		this.inputElement = '';
 		this.onDropFile = this.onDropFile.bind(this);
+        this.onUploadClick = this.onUploadClick.bind(this);
 		this.triggerFileUpload = this.triggerFileUpload.bind(this);
 	}
 
@@ -32,6 +33,11 @@ class ReactImageUploadComponent extends React.Component {
 	triggerFileUpload() {
 		this.inputElement.click();
 	}
+
+    onUploadClick(e) {
+        // Fixes https://github.com/JakeHartnell/react-images-upload/issues/55
+        e.target.value = null;
+    }
 
     /*
        Handle file validation
@@ -207,6 +213,7 @@ class ReactImageUploadComponent extends React.Component {
 						name={this.props.name}
 						multiple={!this.props.singleImage}
 						onChange={this.onDropFile}
+                        onClick={this.onUploadClick}
 						accept={this.props.accept}
 					/>
 					{ this.props.withPreview ? this.renderPreview() : null }
