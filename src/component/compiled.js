@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33,308 +33,376 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var styles = {
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "center",
-	flexWrap: "wrap",
-	width: "100%"
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  width: "100%"
 };
 
 var ReactImageUploadComponent = function (_React$Component) {
-	_inherits(ReactImageUploadComponent, _React$Component);
+  _inherits(ReactImageUploadComponent, _React$Component);
 
-	function ReactImageUploadComponent(props) {
-		_classCallCheck(this, ReactImageUploadComponent);
+  function ReactImageUploadComponent(props) {
+    _classCallCheck(this, ReactImageUploadComponent);
 
-		var _this2 = _possibleConstructorReturn(this, (ReactImageUploadComponent.__proto__ || Object.getPrototypeOf(ReactImageUploadComponent)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ReactImageUploadComponent.__proto__ || Object.getPrototypeOf(ReactImageUploadComponent)).call(this, props));
 
-		_this2.state = {
-			pictures: [],
-			notAcceptedFileType: [],
-			notAcceptedFileSize: []
-		};
-		_this2.inputElement = '';
-		_this2.onDropFile = _this2.onDropFile.bind(_this2);
-		_this2.triggerFileUpload = _this2.triggerFileUpload.bind(_this2);
-		return _this2;
-	}
+    _this.state = {
+      pictures: [],
+      files: [],
+      notAcceptedFileType: [],
+      notAcceptedFileSize: []
+    };
+    _this.inputElement = '';
+    _this.onDropFile = _this.onDropFile.bind(_this);
+    _this.onUploadClick = _this.onUploadClick.bind(_this);
+    _this.triggerFileUpload = _this.triggerFileUpload.bind(_this);
+    return _this;
+  }
 
-	/*
-  On button click, trigger input file to open
-  */
+  _createClass(ReactImageUploadComponent, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      if (prevState.files !== this.state.files) {
+        this.props.onChange(this.state.files, this.state.pictures);
+      }
+    }
 
+    /*
+     Load image at the beggining if defaultImage prop exists
+     */
 
-	_createClass(ReactImageUploadComponent, [{
-		key: 'triggerFileUpload',
-		value: function triggerFileUpload() {
-			this.inputElement.click();
-		}
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      if (this.props.defaultImage) {
+        this.setState({ pictures: [this.props.defaultImage] });
+      }
+    }
 
-		/*
-   Handle file validation
-   */
+    /*
+    Check file extension (onDropFile)
+    */
 
-	}, {
-		key: 'onDropFile',
-		value: function onDropFile(e) {
-			var files = e.target.files;
-			var _this = this;
-			// If callback giving, fire.
-			if (typeof this.props.onChange === "function") {
-				this.props.onChange(files);
-			}
-			// Iterate over all uploaded files
-			for (var i = 0; i < files.length; i++) {
-				var f = files[i];
-				// Check for file extension
-				if (!this.hasExtension(f.name)) {
-					var newArray = _this.state.notAcceptedFileType.slice();
-					newArray.push(f.name);
-					_this.setState({ notAcceptedFileType: newArray });
-					continue;
-				}
-				// Check for file size
-				if (f.size > this.props.maxFileSize) {
-					var _newArray = _this.state.notAcceptedFileSize.slice();
-					_newArray.push(f.name);
-					_this.setState({ notAcceptedFileSize: _newArray });
-					continue;
-				}
+  }, {
+    key: 'hasExtension',
+    value: function hasExtension(fileName) {
+      var pattern = '(' + this.props.imgExtension.join('|').replace(/\./g, '\\.') + ')$';
+      return new RegExp(pattern, 'i').test(fileName);
+    }
 
-				var reader = new FileReader();
-				// Read the image via FileReader API and save image result in state.
-				reader.onload = function () {
-					return function (e) {
-						if (_this.props.singleImage === true) {
-							_this.setState({ pictures: [e.target.result] });
-						} else if (_this.state.pictures.indexOf(e.target.result) === -1) {
-							var _newArray2 = _this.state.pictures.slice();
-							_newArray2.push(e.target.result);
-							_this.setState({ pictures: _newArray2 });
-						}
-					};
-				}(f);
-				reader.readAsDataURL(f);
-			}
-		}
+    /*
+     Handle file validation
+     */
 
-		/*
-   Render the upload icon
-   */
+  }, {
+    key: 'onDropFile',
+    value: function onDropFile(e) {
+      var _this2 = this;
 
-	}, {
-		key: 'renderIcon',
-		value: function renderIcon() {
-			if (this.props.withIcon) {
-				return _react2.default.createElement('img', { src: _UploadIcon2.default, className: 'uploadIcon', alt: 'Upload Icon' });
-			}
-		}
+      var files = e.target.files;
+      var allFilePromises = [];
 
-		/*
-   Render label
-   */
+      // Iterate over all uploaded files
+      for (var i = 0; i < files.length; i++) {
+        var f = files[i];
+        // Check for file extension
+        if (!this.hasExtension(f.name)) {
+          var newArray = this.state.notAcceptedFileType.slice();
+          newArray.push(f.name);
+          this.setState({ notAcceptedFileType: newArray });
+          continue;
+        }
+        // Check for file size
+        if (f.size > this.props.maxFileSize) {
+          var _newArray = this.state.notAcceptedFileSize.slice();
+          _newArray.push(f.name);
+          this.setState({ notAcceptedFileSize: _newArray });
+          continue;
+        }
 
-	}, {
-		key: 'renderLabel',
-		value: function renderLabel() {
-			if (this.props.withLabel) {
-				return _react2.default.createElement(
-					'p',
-					{ className: this.props.labelClass, style: this.props.labelStyles },
-					this.props.label
-				);
-			}
-		}
+        allFilePromises.push(this.readFile(f));
+      }
 
-		/*
-  Check file extension (onDropFile)
-  */
+      Promise.all(allFilePromises).then(function (newFilesData) {
+        var dataURLs = _this2.state.pictures.slice();
+        var files = _this2.state.files.slice();
 
-	}, {
-		key: 'hasExtension',
-		value: function hasExtension(fileName) {
-			return new RegExp('(' + this.props.imgExtension.join('|').replace(/\./g, '\\.') + ')$').test(fileName);
-		}
+        newFilesData.forEach(function (newFileData) {
+          dataURLs.push(newFileData.dataURL);
+          files.push(newFileData.file);
+        });
 
-		/*
-   Remove the image from state
-   */
+        _this2.setState({ pictures: dataURLs, files: files }, function () {
+          _this2.props.onChange(_this2.state.files, _this2.state.pictures);
+        });
+      });
+    }
+  }, {
+    key: 'onUploadClick',
+    value: function onUploadClick(e) {
+      // Fixes https://github.com/JakeHartnell/react-images-upload/issues/55
+      e.target.value = null;
+    }
 
-	}, {
-		key: 'removeImage',
-		value: function removeImage(picture) {
-			var filteredAry = this.state.pictures.filter(function (e) {
-				return e !== picture;
-			});
-			this.setState({ pictures: filteredAry });
-		}
+    /*
+       Read a file and return a promise that when resolved gives the file itself and the data URL
+     */
 
-		/*
-   Check if any errors && render
-   */
+  }, {
+    key: 'readFile',
+    value: function readFile(file) {
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
 
-	}, {
-		key: 'renderErrors',
-		value: function renderErrors() {
-			var _this3 = this;
+        // Read the image via FileReader API and save image result in state.
+        reader.onload = function (e) {
+          // Add the file name to the data URL
+          var dataURL = e.target.result;
+          dataURL = dataURL.replace(";base64", ';name=' + file.name + ';base64');
+          resolve({ file: file, dataURL: dataURL });
+        };
 
-			var notAccepted = '';
-			if (this.state.notAcceptedFileType.length > 0) {
-				notAccepted = this.state.notAcceptedFileType.map(function (error, index) {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'errorMessage' + _this3.props.errorClass, key: index, style: _this3.props.errorStyle },
-						'* ',
-						error,
-						' ',
-						_this3.props.fileTypeError
-					);
-				});
-			}
-			if (this.state.notAcceptedFileSize.length > 0) {
-				notAccepted = this.state.notAcceptedFileSize.map(function (error, index) {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'errorMessage' + _this3.props.errorClass, key: index, style: _this3.props.errorStyle },
-						'* ',
-						error,
-						' ',
-						_this3.props.fileSizeError
-					);
-				});
-			}
-			return notAccepted;
-		}
+        reader.readAsDataURL(file);
+      });
+    }
 
-		/*
-   Render preview images
-   */
+    /*
+     Remove the image from state
+     */
 
-	}, {
-		key: 'renderPreview',
-		value: function renderPreview() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'uploadPicturesWrapper' },
-				_react2.default.createElement(
-					_reactFlipMove2.default,
-					{ enterAnimation: 'fade', leaveAnimation: 'fade', style: styles },
-					this.renderPreviewPictures()
-				)
-			);
-		}
-	}, {
-		key: 'renderPreviewPictures',
-		value: function renderPreviewPictures() {
-			var _this4 = this;
+  }, {
+    key: 'removeImage',
+    value: function removeImage(picture) {
+      var _this3 = this;
 
-			return this.state.pictures.map(function (picture, index) {
-				return _react2.default.createElement(
-					'div',
-					{ key: index, className: 'uploadPictureContainer' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'deleteImage', onClick: function onClick() {
-								return _this4.removeImage(picture);
-							} },
-						'X'
-					),
-					_react2.default.createElement('img', { src: picture, className: 'uploadPicture', alt: 'preview' })
-				);
-			});
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var _this5 = this;
+      var removeIndex = this.state.pictures.findIndex(function (e) {
+        return e === picture;
+      });
+      var filteredPictures = this.state.pictures.filter(function (e, index) {
+        return index !== removeIndex;
+      });
+      var filteredFiles = this.state.files.filter(function (e, index) {
+        return index !== removeIndex;
+      });
 
-			return _react2.default.createElement(
-				'div',
-				{ className: "fileUploader " + this.props.className, style: this.props.style },
-				_react2.default.createElement(
-					'div',
-					{ className: 'fileContainer' },
-					this.renderIcon(),
-					this.renderLabel(),
-					_react2.default.createElement(
-						'div',
-						{ className: 'errorsContainer' },
-						this.renderErrors()
-					),
-					_react2.default.createElement(
-						'button',
-						{
-							className: "chooseFileButton " + this.props.buttonClassName,
-							style: this.props.buttonStyles,
-							onClick: this.triggerFileUpload
-						},
-						this.props.buttonText
-					),
-					_react2.default.createElement('input', {
-						type: 'file',
-						ref: function ref(input) {
-							return _this5.inputElement = input;
-						},
-						name: this.props.name,
-						multiple: 'multiple',
-						onChange: this.onDropFile,
-						accept: this.props.accept
-					}),
-					this.props.withPreview ? this.renderPreview() : null
-				)
-			);
-		}
-	}]);
+      this.setState({ pictures: filteredPictures, files: filteredFiles }, function () {
+        _this3.props.onChange(_this3.state.files, _this3.state.pictures);
+      });
+    }
 
-	return ReactImageUploadComponent;
+    /*
+     Check if any errors && render
+     */
+
+  }, {
+    key: 'renderErrors',
+    value: function renderErrors() {
+      var _this4 = this;
+
+      var notAccepted = '';
+      if (this.state.notAcceptedFileType.length > 0) {
+        notAccepted = this.state.notAcceptedFileType.map(function (error, index) {
+          return _react2.default.createElement(
+            'div',
+            { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
+            '* ',
+            error,
+            ' ',
+            _this4.props.fileTypeError
+          );
+        });
+      }
+      if (this.state.notAcceptedFileSize.length > 0) {
+        notAccepted = this.state.notAcceptedFileSize.map(function (error, index) {
+          return _react2.default.createElement(
+            'div',
+            { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
+            '* ',
+            error,
+            ' ',
+            _this4.props.fileSizeError
+          );
+        });
+      }
+      return notAccepted;
+    }
+
+    /*
+     Render the upload icon
+     */
+
+  }, {
+    key: 'renderIcon',
+    value: function renderIcon() {
+      if (this.props.withIcon) {
+        return _react2.default.createElement('img', { src: _UploadIcon2.default, className: 'uploadIcon', alt: 'Upload Icon' });
+      }
+    }
+
+    /*
+     Render label
+     */
+
+  }, {
+    key: 'renderLabel',
+    value: function renderLabel() {
+      if (this.props.withLabel) {
+        return _react2.default.createElement(
+          'p',
+          { className: this.props.labelClass, style: this.props.labelStyles },
+          this.props.label
+        );
+      }
+    }
+
+    /*
+     Render preview images
+     */
+
+  }, {
+    key: 'renderPreview',
+    value: function renderPreview() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'uploadPicturesWrapper' },
+        _react2.default.createElement(
+          _reactFlipMove2.default,
+          { enterAnimation: 'fade', leaveAnimation: 'fade', style: styles },
+          this.renderPreviewPictures()
+        )
+      );
+    }
+  }, {
+    key: 'renderPreviewPictures',
+    value: function renderPreviewPictures() {
+      var _this5 = this;
+
+      return this.state.pictures.map(function (picture, index) {
+        return _react2.default.createElement(
+          'div',
+          { key: index, className: 'uploadPictureContainer' },
+          _react2.default.createElement(
+            'div',
+            { className: 'deleteImage', onClick: function onClick() {
+                return _this5.removeImage(picture);
+              } },
+            'X'
+          ),
+          _react2.default.createElement('img', { src: picture, className: 'uploadPicture', alt: 'preview' })
+        );
+      });
+    }
+
+    /*
+     On button click, trigger input file to open
+     */
+
+  }, {
+    key: 'triggerFileUpload',
+    value: function triggerFileUpload() {
+      this.inputElement.click();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this6 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: "fileUploader " + this.props.className, style: this.props.style },
+        _react2.default.createElement(
+          'div',
+          { className: 'fileContainer' },
+          this.renderIcon(),
+          this.renderLabel(),
+          _react2.default.createElement(
+            'div',
+            { className: 'errorsContainer' },
+            this.renderErrors()
+          ),
+          _react2.default.createElement(
+            'button',
+            {
+              type: this.props.buttonType,
+              className: "chooseFileButton " + this.props.buttonClassName,
+              style: this.props.buttonStyles,
+              onClick: this.triggerFileUpload
+            },
+            this.props.buttonText
+          ),
+          _react2.default.createElement('input', {
+            type: 'file',
+            ref: function ref(input) {
+              return _this6.inputElement = input;
+            },
+            name: this.props.name,
+            multiple: !this.props.singleImage,
+            onChange: this.onDropFile,
+            onClick: this.onUploadClick,
+            accept: this.props.accept
+          }),
+          this.props.withPreview ? this.renderPreview() : null
+        )
+      );
+    }
+  }]);
+
+  return ReactImageUploadComponent;
 }(_react2.default.Component);
 
 ReactImageUploadComponent.defaultProps = {
-	className: '',
-	buttonClassName: {},
-	buttonStyles: {},
-	withPreview: false,
-	accept: "accept=image/*",
-	name: "",
-	withIcon: true,
-	buttonText: "Choose images",
-	withLabel: true,
-	label: "Max file size: 5mb, accepted: jpg|gif|png",
-	labelStyles: {},
-	labelClass: "",
-	imgExtension: ['.jpg', '.gif', '.png'],
-	maxFileSize: 5242880,
-	fileSizeError: " file size is too big",
-	fileTypeError: " is not supported file extension",
-	errorClass: "",
-	style: {},
-	errorStyle: {},
-	singleImage: false
+  className: '',
+  buttonClassName: "",
+  buttonStyles: {},
+  withPreview: false,
+  accept: "image/*",
+  name: "",
+  withIcon: true,
+  buttonText: "Choose images",
+  buttonType: "button",
+  withLabel: true,
+  label: "Max file size: 5mb, accepted: jpg|gif|png",
+  labelStyles: {},
+  labelClass: "",
+  imgExtension: ['.jpg', '.jpeg', '.gif', '.png'],
+  maxFileSize: 5242880,
+  fileSizeError: " file size is too big",
+  fileTypeError: " is not a supported file extension",
+  errorClass: "",
+  style: {},
+  errorStyle: {},
+  singleImage: false,
+  onChange: function onChange() {},
+  defaultImage: ""
 };
 
 ReactImageUploadComponent.propTypes = {
-	style: _propTypes2.default.object,
-	className: _propTypes2.default.string,
-	onChange: _propTypes2.default.func,
-	onDelete: _propTypes2.default.func,
-	buttonClassName: _propTypes2.default.object,
-	buttonStyles: _propTypes2.default.object,
-	withPreview: _propTypes2.default.bool,
-	accept: _propTypes2.default.string,
-	name: _propTypes2.default.string,
-	withIcon: _propTypes2.default.bool,
-	buttonText: _propTypes2.default.string,
-	withLabel: _propTypes2.default.bool,
-	label: _propTypes2.default.string,
-	labelStyles: _propTypes2.default.object,
-	labelClass: _propTypes2.default.string,
-	imgExtension: _propTypes2.default.array,
-	maxFileSize: _propTypes2.default.number,
-	fileSizeError: _propTypes2.default.string,
-	fileTypeError: _propTypes2.default.string,
-	errorClass: _propTypes2.default.string,
-	errorStyle: _propTypes2.default.object,
-	singleImage: _propTypes2.default.bool
+  style: _propTypes2.default.object,
+  className: _propTypes2.default.string,
+  onChange: _propTypes2.default.func,
+  onDelete: _propTypes2.default.func,
+  buttonClassName: _propTypes2.default.string,
+  buttonStyles: _propTypes2.default.object,
+  buttonType: _propTypes2.default.string,
+  withPreview: _propTypes2.default.bool,
+  accept: _propTypes2.default.string,
+  name: _propTypes2.default.string,
+  withIcon: _propTypes2.default.bool,
+  buttonText: _propTypes2.default.string,
+  withLabel: _propTypes2.default.bool,
+  label: _propTypes2.default.string,
+  labelStyles: _propTypes2.default.object,
+  labelClass: _propTypes2.default.string,
+  imgExtension: _propTypes2.default.array,
+  maxFileSize: _propTypes2.default.number,
+  fileSizeError: _propTypes2.default.string,
+  fileTypeError: _propTypes2.default.string,
+  errorClass: _propTypes2.default.string,
+  errorStyle: _propTypes2.default.object,
+  singleImage: _propTypes2.default.bool,
+  defaultImage: _propTypes2.default.string
 };
 
 exports.default = ReactImageUploadComponent;
