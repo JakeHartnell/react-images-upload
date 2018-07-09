@@ -65,6 +65,7 @@ class App extends React.Component {
 | fileTypeError | String | " is not supported file extension" | Label for file extension error message. |
 | errorClass | String | - | Class for error messages |
 | errorStyle | Object | - | Inline styles for errors |
+| singleImage | Boolean | false | If true, only a single image can be selected |
 
 ### License
 MIT

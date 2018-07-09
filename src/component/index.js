@@ -23,6 +23,7 @@ class ReactImageUploadComponent extends React.Component {
 		};
 		this.inputElement = '';
 		this.onDropFile = this.onDropFile.bind(this);
+        this.onUploadClick = this.onUploadClick.bind(this);
 		this.triggerFileUpload = this.triggerFileUpload.bind(this);
 	}
 
@@ -33,59 +34,72 @@ class ReactImageUploadComponent extends React.Component {
 		this.inputElement.click();
 	}
 
-	/*
-	 Handle file validation
-	 */
-	onDropFile(e) {
-		const files = e.target.files;
-		const _this = this;
+    onUploadClick(e) {
+        // Fixes https://github.com/JakeHartnell/react-images-upload/issues/55
+        e.target.value = null;
+    }
 
-		// Iterate over all uploaded files
-		for (let i = 0; i < files.length; i++) {
-      let f = files[i];
-			// Check for file extension
-			if (!this.hasExtension(f.name)) {
-				const newArray = _this.state.notAcceptedFileType.slice();
-				newArray.push(f.name);
-				_this.setState({notAcceptedFileType: newArray});
-				continue;
-			}
-			// Check for file size
-			if(f.size > this.props.maxFileSize) {
-				const newArray = _this.state.notAcceptedFileSize.slice();
-				newArray.push(f.name);
-				_this.setState({notAcceptedFileSize: newArray});
-				continue;
-			}
+    /*
+       Handle file validation
+       */
+    onDropFile(e) {
+        const files = e.target.files;
+        const allFilePromises = [];
 
-			const reader = new FileReader();
-			// Read the image via FileReader API and save image result in state.
-			reader.onload = (function () {
-				return function (e) {
-                    // Add the file name to the data URL
-                    let dataURL = e.target.result;
-                    dataURL = dataURL.replace(";base64", `;name=${f.name};base64`);
+        // Iterate over all uploaded files
+        for (let i = 0; i < files.length; i++) {
+            let f = files[i];
+            // Check for file extension
+            if (!this.hasExtension(f.name)) {
+                const newArray = this.state.notAcceptedFileType.slice();
+                newArray.push(f.name);
+                this.setState({notAcceptedFileType: newArray});
+                continue;
+            }
+            // Check for file size
+            if(f.size > this.props.maxFileSize) {
+                const newArray = this.state.notAcceptedFileSize.slice();
+                newArray.push(f.name);
+                this.setState({notAcceptedFileSize: newArray});
+                continue;
+            }
 
-                    if (_this.props.singleImage === true) {
-                        _this.setState({pictures: [dataURL], files: [f]}, () => {
-                            _this.props.onChange(_this.state.files, _this.state.pictures);
-                        });
-                    } else if (_this.state.pictures.indexOf(dataURL) === -1) {
-                        const newArray = _this.state.pictures.slice();
-                        newArray.push(dataURL);
+            allFilePromises.push(this.readFile(f));
+        }
 
-                        const newFiles = _this.state.files.slice();
-                        newFiles.push(f);
+        Promise.all(allFilePromises).then(newFilesData => {
+            const dataURLs = this.state.pictures.slice();
+            const files = this.state.files.slice();
 
-                        _this.setState({pictures: newArray, files: newFiles}, () => {
-                            _this.props.onChange(_this.state.files, _this.state.pictures);
-                        });
-                    }
-				};
-			})(f);
-			reader.readAsDataURL(f);
-		}
-	}
+            newFilesData.forEach(newFileData => {
+                dataURLs.push(newFileData.dataURL);
+                files.push(newFileData.file);
+            });
+
+            this.setState({pictures: dataURLs, files: files}, () => {
+                this.props.onChange(this.state.files, this.state.pictures);
+            });
+        });
+    }
+
+    /*
+     Read a file and return a promise that when resolved gives the file itself and the data URL
+     */
+    readFile(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            // Read the image via FileReader API and save image result in state.
+            reader.onload = function (e) {
+                // Add the file name to the data URL
+                let dataURL = e.target.result;
+                dataURL = dataURL.replace(";base64", `;name=${file.name};base64`);
+                resolve({file, dataURL});
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
 
   /*
    Render the upload icon
@@ -197,8 +211,9 @@ class ReactImageUploadComponent extends React.Component {
 						type="file"
 						ref={input => this.inputElement = input}
 						name={this.props.name}
-						multiple="multiple"
+						multiple={!this.props.singleImage}
 						onChange={this.onDropFile}
+                        onClick={this.onUploadClick}
 						accept={this.props.accept}
 					/>
 					{ this.props.withPreview ? this.renderPreview() : null }
