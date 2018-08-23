@@ -18,7 +18,7 @@ class App extends React.Component {
 
     onDrop(pictureFiles, pictureDataURLs) {
         this.setState({
-            pictures: this.state.pictures.concat(pictureFiles),
+            pictures: pictureFiles
         });
     }
 
