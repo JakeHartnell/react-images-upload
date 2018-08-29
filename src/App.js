@@ -72,6 +72,12 @@ export default class App extends React.PureComponent {
                             <td className="text-left">Class name for the input.</td>
                         </tr>
                         <tr>
+                            <td className="text-left">fileContainerStyle</td>
+                            <td className="text-left">Object</td>
+                            <td className="text-left">-</td>
+                            <td className="text-left">Inline styles for file upload container.</td>
+                        </tr>
+                        <tr>
                             <td className="text-left">onChange</td>
                             <td className="text-left">Function</td>
                             <td className="text-left">-</td>
