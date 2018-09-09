@@ -208,7 +208,7 @@ class ReactImageUploadComponent extends React.Component {
   render() {
     return (
       <div className={"fileUploader " + this.props.className} style={this.props.style}>
-        <div className="fileContainer">
+        <div className="fileContainer" style={this.props.fileContainerStyle}>
           {this.renderIcon()}
           {this.renderLabel()}
           <div className="errorsContainer">
@@ -240,6 +240,7 @@ class ReactImageUploadComponent extends React.Component {
 
 ReactImageUploadComponent.defaultProps = {
   className: '',
+  fileContainerStyle: {},
   buttonClassName: "",
   buttonStyles: {},
   withPreview: false,
@@ -266,6 +267,7 @@ ReactImageUploadComponent.defaultProps = {
 
 ReactImageUploadComponent.propTypes = {
   style: PropTypes.object,
+  fileContainerStyle: PropTypes.object,
   className: PropTypes.string,
   onChange: PropTypes.func,
   onDelete: PropTypes.func,

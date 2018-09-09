@@ -47,6 +47,7 @@ class App extends React.Component {
 | parameter | type | default | description |
 | :--------: | :--: | :-----: | :---------- |
 | className | String | - | Class name for the input. |
+| fileContainerStyle | Object | - | Inline styles for the file container. |
 | onChange | Function | - | On change handler for the input. |
 | buttonClassName | String | - | Class name for upload button. |
 | buttonStyles | Object | - | Inline styles for upload button. |
