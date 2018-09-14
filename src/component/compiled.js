@@ -201,7 +201,7 @@ var ReactImageUploadComponent = function (_React$Component) {
     value: function renderErrors() {
       var _this4 = this;
 
-      var notAccepted = '';
+      var notAccepted = [];
       if (this.state.notAcceptedFileType.length > 0) {
         notAccepted = this.state.notAcceptedFileType.map(function (error, index) {
           return _react2.default.createElement(
@@ -215,7 +215,7 @@ var ReactImageUploadComponent = function (_React$Component) {
         });
       }
       if (this.state.notAcceptedFileSize.length > 0) {
-        notAccepted = this.state.notAcceptedFileSize.map(function (error, index) {
+        notAccepted = notAccepted.concat(this.state.notAcceptedFileSize.map(function (error, index) {
           return _react2.default.createElement(
             'div',
             { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
@@ -224,7 +224,7 @@ var ReactImageUploadComponent = function (_React$Component) {
             ' ',
             _this4.props.fileSizeError
           );
-        });
+        }));
       }
       return notAccepted;
     }
@@ -314,7 +314,10 @@ var ReactImageUploadComponent = function (_React$Component) {
         { className: "fileUploader " + this.props.className, style: this.props.style },
         _react2.default.createElement(
           'div',
-          { className: 'fileContainer' },
+          {
+            className: 'fileContainer',
+            style: this.props.fileContainerStyle
+          },
           this.renderIcon(),
           this.renderLabel(),
           _react2.default.createElement(
@@ -354,6 +357,7 @@ var ReactImageUploadComponent = function (_React$Component) {
 
 ReactImageUploadComponent.defaultProps = {
   className: '',
+  fileContainerStyle: {},
   buttonClassName: "",
   buttonStyles: {},
   withPreview: false,
@@ -380,6 +384,7 @@ ReactImageUploadComponent.defaultProps = {
 
 ReactImageUploadComponent.propTypes = {
   style: _propTypes2.default.object,
+  fileContainerStyle: _propTypes2.default.object,
   className: _propTypes2.default.string,
   onChange: _propTypes2.default.func,
   onDelete: _propTypes2.default.func,
