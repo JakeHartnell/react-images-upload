@@ -134,7 +134,7 @@ class ReactImageUploadComponent extends React.Component {
    Check if any errors && render
    */
   renderErrors() {
-    let notAccepted = '';
+    let notAccepted = [];
     if (this.state.notAcceptedFileType.length > 0) {
       notAccepted = this.state.notAcceptedFileType.map((error, index) => {
         return (
@@ -145,13 +145,13 @@ class ReactImageUploadComponent extends React.Component {
       });
     }
     if (this.state.notAcceptedFileSize.length > 0) {
-      notAccepted = this.state.notAcceptedFileSize.map((error, index) => {
+      notAccepted = notAccepted.concat(this.state.notAcceptedFileSize.map((error, index) => {
         return (
           <div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
             * {error} {this.props.fileSizeError}
           </div>
         )
-      });
+      }));
     }
     return notAccepted;
   }
@@ -208,7 +208,7 @@ class ReactImageUploadComponent extends React.Component {
   render() {
     return (
       <div className={"fileUploader " + this.props.className} style={this.props.style}>
-        <div className="fileContainer" style={this.props.fileContainerStyle}>
+        <div className="fileContainer">
           {this.renderIcon()}
           {this.renderLabel()}
           <div className="errorsContainer">
@@ -240,7 +240,6 @@ class ReactImageUploadComponent extends React.Component {
 
 ReactImageUploadComponent.defaultProps = {
   className: '',
-  fileContainerStyle: {},
   buttonClassName: "",
   buttonStyles: {},
   withPreview: false,
@@ -267,7 +266,6 @@ ReactImageUploadComponent.defaultProps = {
 
 ReactImageUploadComponent.propTypes = {
   style: PropTypes.object,
-  fileContainerStyle: PropTypes.object,
   className: PropTypes.string,
   onChange: PropTypes.func,
   onDelete: PropTypes.func,

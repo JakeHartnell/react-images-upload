@@ -201,7 +201,7 @@ var ReactImageUploadComponent = function (_React$Component) {
     value: function renderErrors() {
       var _this4 = this;
 
-      var notAccepted = '';
+      var notAccepted = [];
       if (this.state.notAcceptedFileType.length > 0) {
         notAccepted = this.state.notAcceptedFileType.map(function (error, index) {
           return _react2.default.createElement(
@@ -215,7 +215,7 @@ var ReactImageUploadComponent = function (_React$Component) {
         });
       }
       if (this.state.notAcceptedFileSize.length > 0) {
-        notAccepted = this.state.notAcceptedFileSize.map(function (error, index) {
+        notAccepted = notAccepted.concat(this.state.notAcceptedFileSize.map(function (error, index) {
           return _react2.default.createElement(
             'div',
             { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
@@ -224,7 +224,7 @@ var ReactImageUploadComponent = function (_React$Component) {
             ' ',
             _this4.props.fileSizeError
           );
-        });
+        }));
       }
       return notAccepted;
     }
