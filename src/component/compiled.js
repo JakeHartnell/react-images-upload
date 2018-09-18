@@ -103,27 +103,25 @@ var ReactImageUploadComponent = function (_React$Component) {
 
       var files = e.target.files;
       var allFilePromises = [];
+      var newNotAcceptedFileType = [];
+      var newNotAcceptedFileSize = [];
 
       // Iterate over all uploaded files
       for (var i = 0; i < files.length; i++) {
         var f = files[i];
         // Check for file extension
         if (!this.hasExtension(f.name)) {
-          var newArray = this.state.notAcceptedFileType.slice();
-          newArray.push(f.name);
-          this.setState({ notAcceptedFileType: newArray });
+          newNotAcceptedFileType.push(f.name);
           continue;
         }
         // Check for file size
         if (f.size > this.props.maxFileSize) {
-          var _newArray = this.state.notAcceptedFileSize.slice();
-          _newArray.push(f.name);
-          this.setState({ notAcceptedFileSize: _newArray });
+          newNotAcceptedFileSize.push(f.name);
           continue;
         }
-
         allFilePromises.push(this.readFile(f));
       }
+      this.setState({ notAcceptedFileType: newNotAcceptedFileType, notAcceptedFileSize: newNotAcceptedFileSize });
 
       Promise.all(allFilePromises).then(function (newFilesData) {
         var dataURLs = _this2.state.pictures.slice();
@@ -314,10 +312,7 @@ var ReactImageUploadComponent = function (_React$Component) {
         { className: "fileUploader " + this.props.className, style: this.props.style },
         _react2.default.createElement(
           'div',
-          {
-            className: 'fileContainer',
-            style: this.props.fileContainerStyle
-          },
+          { className: 'fileContainer', style: this.props.fileContainerStyle },
           this.renderIcon(),
           this.renderLabel(),
           _react2.default.createElement(
