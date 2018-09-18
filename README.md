@@ -72,5 +72,11 @@ class App extends React.Component {
 ### Development
 Make sure you have [yarn](https://yarnpkg.com/en/) installed. Clone the repo and run `yarn`.
 
+#### Install dependencies
+Run `yarn install` in both `/` and `/src/component`.
+
+#### Contributing
+Before committing, please run `yarn run transpile` in `/src/component` to update `/src/component/compiled.js`
+
 ### License
 MIT
