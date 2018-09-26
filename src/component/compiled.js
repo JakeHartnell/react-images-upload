@@ -49,7 +49,7 @@ var ReactImageUploadComponent = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ReactImageUploadComponent.__proto__ || Object.getPrototypeOf(ReactImageUploadComponent)).call(this, props));
 
     _this.state = {
-      pictures: props.defaultImages.length ? props.defaultImages : [],
+      pictures: [...props.defaultImages],
       files: [],
       notAcceptedFileType: [],
       notAcceptedFileSize: []
@@ -76,9 +76,9 @@ var ReactImageUploadComponent = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.defaultImages.length) {
-        this.setState({ pictures: nextProps.defaultImages });
-      }
+      // if (nextProps.defaultImages.length) {
+      //   this.setState({ pictures: nextProps.defaultImages });
+      // }
     }
 
     /*
