@@ -76,9 +76,9 @@ var ReactImageUploadComponent = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      // if (nextProps.defaultImages.length) {
-      //   this.setState({ pictures: nextProps.defaultImages });
-      // }
+      if (nextProps.defaultImages !== this.props.defaultImages) {
+        this.setState({ pictures: nextProps.defaultImages });
+      }
     }
 
     /*
