@@ -230,6 +230,7 @@ class ReactImageUploadComponent extends React.Component {
             onChange={this.onDropFile}
             onClick={this.onUploadClick}
             accept={this.props.accept}
+            required={this.props.required && !this.props.defaultImage}
           />
           { this.props.withPreview ? this.renderPreview() : null }
         </div>
@@ -262,7 +263,8 @@ ReactImageUploadComponent.defaultProps = {
   errorStyle: {},
   singleImage: false,
   onChange: () => {},
-  defaultImage: ""
+  defaultImage: "",
+  required: false
 };
 
 ReactImageUploadComponent.propTypes = {
@@ -290,7 +292,8 @@ ReactImageUploadComponent.propTypes = {
   errorClass: PropTypes.string,
   errorStyle: PropTypes.object,
   singleImage: PropTypes.bool,
-  defaultImage: PropTypes.string
+  defaultImage: PropTypes.string,
+  required: PropTypes.bool
 };
 
 export default ReactImageUploadComponent;
