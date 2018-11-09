@@ -205,6 +205,10 @@ class ReactImageUploadComponent extends React.Component {
     this.inputElement.click();
   }
 
+  clearPictures() {
+    this.setState({pictures: []})
+  }
+
   render() {
     return (
       <div className={"fileUploader " + this.props.className} style={this.props.style}>
