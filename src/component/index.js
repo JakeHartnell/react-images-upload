@@ -56,9 +56,9 @@ class ReactImageUploadComponent extends React.Component {
   onDropFile(e) {
     const files = e.target.files;
     const allFilePromises = [];
-
+    let imageCount = files.length > this.props.maxCount? this.props.maxCount: files.length
     // Iterate over all uploaded files
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < imageCount; i++) {
       let f = files[i];
       // Check for file extension
       if (!this.hasExtension(f.name)) {
@@ -230,7 +230,6 @@ class ReactImageUploadComponent extends React.Component {
             onChange={this.onDropFile}
             onClick={this.onUploadClick}
             accept={this.props.accept}
-	    maxLength=2
           />
           { this.props.withPreview ? this.renderPreview() : null }
         </div>
@@ -263,7 +262,8 @@ ReactImageUploadComponent.defaultProps = {
   errorStyle: {},
   singleImage: false,
   onChange: () => {},
-  defaultImage: ""
+  defaultImage: "",
+  maxCount:5
 };
 
 ReactImageUploadComponent.propTypes = {
@@ -291,7 +291,8 @@ ReactImageUploadComponent.propTypes = {
   errorClass: PropTypes.string,
   errorStyle: PropTypes.object,
   singleImage: PropTypes.bool,
-  defaultImage: PropTypes.string
+  defaultImage: PropTypes.string,
+  maxCount:PropTypes.number,
 };
 
 export default ReactImageUploadComponent;
