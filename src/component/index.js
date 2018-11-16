@@ -230,6 +230,7 @@ class ReactImageUploadComponent extends React.Component {
             onChange={this.onDropFile}
             onClick={this.onUploadClick}
             accept={this.props.accept}
+	    maxLength=2
           />
           { this.props.withPreview ? this.renderPreview() : null }
         </div>
