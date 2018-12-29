@@ -197,11 +197,17 @@ export default class App extends React.PureComponent {
                             <td className="text-left">['.jpg', '.gif', '.png', '.gif']</td>
                             <td className="text-left">Inline styles for errors .</td>
                         </tr>
-                    <tr>
+                        <tr>
                             <td className="text-left">singleImage</td>
                             <td className="text-left">Boolean</td>
                             <td className="text-left">false</td>
                             <td className="text-left">Limits one image at a time.</td>
+                        </tr>
+                        <tr>
+                            <td className="text-left">defaultImage</td>
+                            <td className="text-left">String</td>
+                            <td className="text-left">false</td>
+                            <td className="text-left">Image url for the default preview (example an already uploaded image)</td>
                         </tr>
                     </tbody>
                 </table>
