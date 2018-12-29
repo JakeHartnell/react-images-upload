@@ -134,9 +134,7 @@ var ReactImageUploadComponent = function (_React$Component) {
           files.push(newFileData.file);
         });
 
-        _this2.setState({ pictures: dataURLs, files: files }, function () {
-          _this2.props.onChange(_this2.state.files, _this2.state.pictures);
-        });
+        _this2.setState({ pictures: dataURLs, files: files });
       });
     }
   }, {
