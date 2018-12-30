@@ -178,8 +178,10 @@ class ReactImageUploadComponent extends React.Component {
   renderPreview() {
     return (
       <div className="uploadPicturesWrapper">
-                 {this.renderPreviewPictures()}
-            </div>
+        <FlipMove enterAnimation="fade" leaveAnimation="fade" style={styles}>
+          {this.renderPreviewPictures()}
+        </FlipMove>
+      </div>
     );
   }
 
