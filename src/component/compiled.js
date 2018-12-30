@@ -303,6 +303,11 @@ var ReactImageUploadComponent = function (_React$Component) {
       this.inputElement.click();
     }
   }, {
+    key: 'clearPictures',
+    value: function clearPictures() {
+      this.setState({ pictures: [] });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this6 = this;
@@ -312,7 +317,7 @@ var ReactImageUploadComponent = function (_React$Component) {
         { className: "fileUploader " + this.props.className, style: this.props.style },
         _react2.default.createElement(
           'div',
-          { className: 'fileContainer' },
+          { className: 'fileContainer', style: this.props.fileContainerStyle },
           this.renderIcon(),
           this.renderLabel(),
           _react2.default.createElement(
@@ -352,6 +357,7 @@ var ReactImageUploadComponent = function (_React$Component) {
 
 ReactImageUploadComponent.defaultProps = {
   className: '',
+  fileContainerStyle: {},
   buttonClassName: "",
   buttonStyles: {},
   withPreview: false,
@@ -378,6 +384,7 @@ ReactImageUploadComponent.defaultProps = {
 
 ReactImageUploadComponent.propTypes = {
   style: _propTypes2.default.object,
+  fileContainerStyle: _propTypes2.default.object,
   className: _propTypes2.default.string,
   onChange: _propTypes2.default.func,
   onDelete: _propTypes2.default.func,
