@@ -22,7 +22,6 @@ interface Props {
   errorClass?: string
   errorStyle?: object
   singleImage?: boolean
-  defaultImage?: string
   style?: object
   defaultImage?: string
 }
