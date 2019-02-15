@@ -204,7 +204,7 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   clearPictures() {
-    this.setState({pictures: []})
+    this.setState({pictures: [], files:[]})
   }
 
   render() {
