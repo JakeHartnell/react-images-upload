@@ -16,7 +16,7 @@ class ReactImageUploadComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pictures: props.defaultImage ? [props.defaultImage] : [],
+      pictures: [...props.defaultImages],
       files: [],
       notAcceptedFileType: [],
       notAcceptedFileSize: []
@@ -37,8 +37,8 @@ class ReactImageUploadComponent extends React.Component {
    Load image at the beggining if defaultImage prop exists
    */
   componentWillReceiveProps(nextProps){
-    if(nextProps.defaultImage){
-      this.setState({pictures: [nextProps.defaultImage]});
+    if(nextProps.defaultImages !== this.props.defaultImages){
+      this.setState({pictures: nextProps.defaultImages});
     }
   }
 
@@ -264,7 +264,7 @@ ReactImageUploadComponent.defaultProps = {
   errorStyle: {},
   singleImage: false,
   onChange: () => {},
-  defaultImage: ""
+  defaultImages: []
 };
 
 ReactImageUploadComponent.propTypes = {
@@ -292,7 +292,7 @@ ReactImageUploadComponent.propTypes = {
   errorClass: PropTypes.string,
   errorStyle: PropTypes.object,
   singleImage: PropTypes.bool,
-  defaultImage: PropTypes.string
+  defaultImages: PropTypes.array
 };
 
 export default ReactImageUploadComponent;
