@@ -55,6 +55,7 @@ class ReactImageUploadComponent extends React.Component {
    */
   onDropFile(e) {
     const files = e.target.files;
+    console.log(files);
     const allFilePromises = [];
 
     // Iterate over all uploaded files
@@ -78,8 +79,10 @@ class ReactImageUploadComponent extends React.Component {
       allFilePromises.push(this.readFile(f));
     }
 
+    const {singleImage} = this.props;
+
     Promise.all(allFilePromises).then(newFilesData => {
-      const dataURLs = this.state.pictures.slice();
+      const dataURLs = singleImage?[]:this.state.pictures.slice();
       const files = this.state.files.slice();
 
       newFilesData.forEach(newFileData => {
