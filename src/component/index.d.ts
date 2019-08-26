@@ -3,7 +3,7 @@ import { Component } from 'react'
 interface Props {
   className?: string
   fileContainerStyle?: object
-  onChange?: (files: File[]) => void
+  onChange?: (files: File[],pictures:string[]) => void
   buttonClassName?: string
   buttonStyles?: object
   withPreview?: boolean
