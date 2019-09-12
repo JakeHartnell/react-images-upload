@@ -105,27 +105,25 @@ var ReactImageUploadComponent = function (_React$Component) {
 
       var files = e.target.files;
       var allFilePromises = [];
+      var newNotAcceptedFileType = [];
+      var newNotAcceptedFileSize = [];
 
       // Iterate over all uploaded files
       for (var i = 0; i < files.length; i++) {
         var f = files[i];
         // Check for file extension
         if (!this.hasExtension(f.name)) {
-          var newArray = this.state.notAcceptedFileType.slice();
-          newArray.push(f.name);
-          this.setState({ notAcceptedFileType: newArray });
+          newNotAcceptedFileType.push(f.name);
           continue;
         }
         // Check for file size
         if (f.size > this.props.maxFileSize) {
-          var _newArray = this.state.notAcceptedFileSize.slice();
-          _newArray.push(f.name);
-          this.setState({ notAcceptedFileSize: _newArray });
+          newNotAcceptedFileSize.push(f.name);
           continue;
         }
-
         allFilePromises.push(this.readFile(f));
       }
+      this.setState({ notAcceptedFileType: newNotAcceptedFileType, notAcceptedFileSize: newNotAcceptedFileSize });
 
       Promise.all(allFilePromises).then(function (newFilesData) {
         var dataURLs = _this2.state.pictures.slice();
@@ -201,7 +199,7 @@ var ReactImageUploadComponent = function (_React$Component) {
     value: function renderErrors() {
       var _this4 = this;
 
-      var notAccepted = '';
+      var notAccepted = [];
       if (this.state.notAcceptedFileType.length > 0) {
         notAccepted = this.state.notAcceptedFileType.map(function (error, index) {
           return _react2.default.createElement(
@@ -215,7 +213,7 @@ var ReactImageUploadComponent = function (_React$Component) {
         });
       }
       if (this.state.notAcceptedFileSize.length > 0) {
-        notAccepted = this.state.notAcceptedFileSize.map(function (error, index) {
+        notAccepted = notAccepted.concat(this.state.notAcceptedFileSize.map(function (error, index) {
           return _react2.default.createElement(
             'div',
             { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
@@ -224,7 +222,7 @@ var ReactImageUploadComponent = function (_React$Component) {
             ' ',
             _this4.props.fileSizeError
           );
-        });
+        }));
       }
       return notAccepted;
     }

@@ -56,27 +56,25 @@ class ReactImageUploadComponent extends React.Component {
   onDropFile(e) {
     const files = e.target.files;
     const allFilePromises = [];
+    const newNotAcceptedFileType = [];
+    const newNotAcceptedFileSize = [];
 
     // Iterate over all uploaded files
     for (let i = 0; i < files.length; i++) {
       let f = files[i];
       // Check for file extension
       if (!this.hasExtension(f.name)) {
-        const newArray = this.state.notAcceptedFileType.slice();
-        newArray.push(f.name);
-        this.setState({notAcceptedFileType: newArray});
+        newNotAcceptedFileType.push(f.name);
         continue;
       }
       // Check for file size
       if(f.size > this.props.maxFileSize) {
-        const newArray = this.state.notAcceptedFileSize.slice();
-        newArray.push(f.name);
-        this.setState({notAcceptedFileSize: newArray});
+        newNotAcceptedFileSize.push(f.name);
         continue;
       }
-
       allFilePromises.push(this.readFile(f));
     }
+    this.setState({notAcceptedFileType: newNotAcceptedFileType, notAcceptedFileSize: newNotAcceptedFileSize});
 
     Promise.all(allFilePromises).then(newFilesData => {
       const dataURLs = this.state.pictures.slice();
@@ -132,7 +130,7 @@ class ReactImageUploadComponent extends React.Component {
    Check if any errors && render
    */
   renderErrors() {
-    let notAccepted = '';
+    let notAccepted = [];
     if (this.state.notAcceptedFileType.length > 0) {
       notAccepted = this.state.notAcceptedFileType.map((error, index) => {
         return (
@@ -143,13 +141,13 @@ class ReactImageUploadComponent extends React.Component {
       });
     }
     if (this.state.notAcceptedFileSize.length > 0) {
-      notAccepted = this.state.notAcceptedFileSize.map((error, index) => {
+      notAccepted = notAccepted.concat(this.state.notAcceptedFileSize.map((error, index) => {
         return (
           <div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
             * {error} {this.props.fileSizeError}
           </div>
         )
-      });
+      }));
     }
     return notAccepted;
   }
