@@ -42,6 +42,11 @@ var styles = {
   width: "100%"
 };
 
+var ERROR = {
+  NOT_SUPPORTED_EXTENSION: 'NOT_SUPPORTED_EXTENSION',
+  FILESIZE_TOO_LARGE: 'FILESIZE_TOO_LARGE'
+};
+
 var ReactImageUploadComponent = function (_React$Component) {
   _inherits(ReactImageUploadComponent, _React$Component);
 
@@ -53,8 +58,7 @@ var ReactImageUploadComponent = function (_React$Component) {
     _this.state = {
       pictures: [].concat(_toConsumableArray(props.defaultImages)),
       files: [],
-      notAcceptedFileType: [],
-      notAcceptedFileSize: []
+      fileErrors: []
     };
     _this.inputElement = '';
     _this.onDropFile = _this.onDropFile.bind(_this);
@@ -105,27 +109,37 @@ var ReactImageUploadComponent = function (_React$Component) {
 
       var files = e.target.files;
       var allFilePromises = [];
+      var fileErrors = [];
 
       // Iterate over all uploaded files
       for (var i = 0; i < files.length; i++) {
-        var f = files[i];
+        var file = files[i];
+        var fileError = {
+          name: file.name
+        };
         // Check for file extension
-        if (!this.hasExtension(f.name)) {
-          var newArray = this.state.notAcceptedFileType.slice();
-          newArray.push(f.name);
-          this.setState({ notAcceptedFileType: newArray });
+        if (!this.hasExtension(file.name)) {
+          fileError = Object.assign(fileError, {
+            type: ERROR.NOT_SUPPORTED_EXTENSION
+          });
+          fileErrors.push(fileError);
           continue;
         }
         // Check for file size
-        if (f.size > this.props.maxFileSize) {
-          var _newArray = this.state.notAcceptedFileSize.slice();
-          _newArray.push(f.name);
-          this.setState({ notAcceptedFileSize: _newArray });
+        if (file.size > this.props.maxFileSize) {
+          fileError = Object.assign(fileError, {
+            type: ERROR.FILESIZE_TOO_LARGE
+          });
+          fileErrors.push(fileError);
           continue;
         }
 
-        allFilePromises.push(this.readFile(f));
+        allFilePromises.push(this.readFile(file));
       }
+
+      this.setState({
+        fileErrors: fileErrors
+      });
 
       Promise.all(allFilePromises).then(function (newFilesData) {
         var dataURLs = _this2.state.pictures.slice();
@@ -201,32 +215,18 @@ var ReactImageUploadComponent = function (_React$Component) {
     value: function renderErrors() {
       var _this4 = this;
 
-      var notAccepted = '';
-      if (this.state.notAcceptedFileType.length > 0) {
-        notAccepted = this.state.notAcceptedFileType.map(function (error, index) {
-          return _react2.default.createElement(
-            'div',
-            { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
-            '* ',
-            error,
-            ' ',
-            _this4.props.fileTypeError
-          );
-        });
-      }
-      if (this.state.notAcceptedFileSize.length > 0) {
-        notAccepted = this.state.notAcceptedFileSize.map(function (error, index) {
-          return _react2.default.createElement(
-            'div',
-            { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
-            '* ',
-            error,
-            ' ',
-            _this4.props.fileSizeError
-          );
-        });
-      }
-      return notAccepted;
+      var fileErrors = this.state.fileErrors;
+
+      return fileErrors.map(function (fileError, index) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
+          '* ',
+          fileError.name,
+          ' ',
+          fileError.type === ERROR.FILESIZE_TOO_LARGE ? _this4.props.fileSizeError : _this4.props.fileTypeError
+        );
+      });
     }
 
     /*
