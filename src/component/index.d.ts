@@ -4,6 +4,7 @@ interface Props {
   className?: string
   fileContainerStyle?: object
   onChange?: (files: File[],pictures:string[]) => void
+  onDelete?: () => void
   buttonClassName?: string
   buttonStyles?: object
   withPreview?: boolean
