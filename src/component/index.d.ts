@@ -23,6 +23,6 @@ interface Props {
   errorStyle?: object
   singleImage?: boolean
   style?: object
-  defaultImage?: string
+  defaultImages?: string[]
 }
 export default class ReactImageUploadComponent extends Component<Props> { }
