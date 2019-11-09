@@ -12,14 +12,18 @@ const styles = {
   width: "100%"
 };
 
+const ERROR = {
+  NOT_SUPPORTED_EXTENSION: 'NOT_SUPPORTED_EXTENSION',
+  FILESIZE_TOO_LARGE: 'FILESIZE_TOO_LARGE'
+}
+
 class ReactImageUploadComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       pictures: [...props.defaultImages],
       files: [],
-      notAcceptedFileType: [],
-      notAcceptedFileSize: []
+      fileErrors: []
     };
     this.inputElement = '';
     this.onDropFile = this.onDropFile.bind(this);
@@ -56,27 +60,37 @@ class ReactImageUploadComponent extends React.Component {
   onDropFile(e) {
     const files = e.target.files;
     const allFilePromises = [];
+    const fileErrors = [];
 
     // Iterate over all uploaded files
     for (let i = 0; i < files.length; i++) {
-      let f = files[i];
+      let file = files[i];
+      let fileError = {
+        name: file.name,
+      };
       // Check for file extension
-      if (!this.hasExtension(f.name)) {
-        const newArray = this.state.notAcceptedFileType.slice();
-        newArray.push(f.name);
-        this.setState({notAcceptedFileType: newArray});
+      if (!this.hasExtension(file.name)) {
+        fileError = Object.assign(fileError, {
+          type: ERROR.NOT_SUPPORTED_EXTENSION
+        });
+        fileErrors.push(fileError);
         continue;
       }
       // Check for file size
-      if(f.size > this.props.maxFileSize) {
-        const newArray = this.state.notAcceptedFileSize.slice();
-        newArray.push(f.name);
-        this.setState({notAcceptedFileSize: newArray});
+      if(file.size > this.props.maxFileSize) {
+        fileError = Object.assign(fileError, {
+          type: ERROR.FILESIZE_TOO_LARGE
+        });
+        fileErrors.push(fileError);
         continue;
       }
 
-      allFilePromises.push(this.readFile(f));
+      allFilePromises.push(this.readFile(file));
     }
+
+    this.setState({
+      fileErrors
+    });
 
     Promise.all(allFilePromises).then(newFilesData => {
       const dataURLs = this.state.pictures.slice();
@@ -132,26 +146,14 @@ class ReactImageUploadComponent extends React.Component {
    Check if any errors && render
    */
   renderErrors() {
-    let notAccepted = '';
-    if (this.state.notAcceptedFileType.length > 0) {
-      notAccepted = this.state.notAcceptedFileType.map((error, index) => {
-        return (
-          <div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
-            * {error} {this.props.fileTypeError}
-          </div>
-        )
-      });
-    }
-    if (this.state.notAcceptedFileSize.length > 0) {
-      notAccepted = this.state.notAcceptedFileSize.map((error, index) => {
-        return (
-          <div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
-            * {error} {this.props.fileSizeError}
-          </div>
-        )
-      });
-    }
-    return notAccepted;
+    const { fileErrors } = this.state;
+    return fileErrors.map((fileError, index) => {
+      return (
+        <div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
+          * {fileError.name} {fileError.type === ERROR.FILESIZE_TOO_LARGE ? this.props.fileSizeError: this.props.fileTypeError}
+        </div>
+      );
+    });
   }
 
   /*
