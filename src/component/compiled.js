@@ -141,9 +141,12 @@ var ReactImageUploadComponent = function (_React$Component) {
         fileErrors: fileErrors
       });
 
+      var singleImage = this.props.singleImage;
+
+
       Promise.all(allFilePromises).then(function (newFilesData) {
-        var dataURLs = _this2.state.pictures.slice();
-        var files = _this2.state.files.slice();
+        var dataURLs = singleImage ? [] : _this2.state.pictures.slice();
+        var files = singleImage ? [] : _this2.state.files.slice();
 
         newFilesData.forEach(function (newFileData) {
           dataURLs.push(newFileData.dataURL);
