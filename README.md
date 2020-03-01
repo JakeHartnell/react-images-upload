@@ -10,7 +10,7 @@ npm install --save react-images-upload
 ```
 
 ## Usage
-
+### Using Classes
 ```javascript
 import React from "react";
 import ImageUploader from "react-images-upload";
@@ -41,7 +41,30 @@ class App extends React.Component {
   }
 }
 ```
+### Using Hooks
+```javascript
+import React, { useState } from "react";
+import ImageUploader from "react-images-upload";
 
+const App = props => {
+  const [pictures, setPictures] = useState([]);
+
+  const onDrop = picture => {
+    setPictures([...pictures, picture]);
+  };
+  return (
+    <ImageUploader
+      {...props}
+      withIcon={true}
+      onChange={onDrop}
+      imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+      maxFileSize={5242880}
+    />
+  );
+};
+
+export default App;
+```
 ### Available Options
 
 |    parameter    |   type   |              default               | description                                                   |
