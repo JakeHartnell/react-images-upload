@@ -11,7 +11,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-flip-move": "^3.0.4",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^3.0.0",
     "react-syntax-highlighter": "^7.0.4"
   },
   "scripts": {
