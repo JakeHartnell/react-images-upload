@@ -81,7 +81,7 @@ export default App;
 |   buttonText    |  String  |          'Choose images'           | The text that display in the button.                          |
 |   buttonType    |  String  |              'submit'              | The value of the button's "type" attribute.                   |
 |    withLabel    | Boolean  |                true                | Show instruction label                                        |
-|      label      |  String  | 'Max file size: 5mb, accepted: jpg | gif                                                           | png | gif' | Label text |
+|      label      |  String  | 'Max file size: 5mb, accepted: jpg, gif, png |         Label text                                  |
 |   labelStyles   |  Object  |                 -                  | Inline styles for the label.                                  |
 |   labelClass    |  string  |                 -                  | Class name for the label                                      |
 |  imgExtension   |  Array   |  ['.jpg', '.gif', '.png', '.gif']  | Supported image extension (will use in the image validation). |
@@ -90,6 +90,7 @@ export default App;
 |  fileTypeError  |  String  | " is not supported file extension" | Label for file extension error message.                       |
 |   errorClass    |  String  |                 -                  | Class for error messages                                      |
 |   errorStyle    |  Object  |                 -                  | Inline styles for errors                                      |
+|   singleImage   | Boolean  |               false                | Upload one single image                                       |
 
 ### Development
 
