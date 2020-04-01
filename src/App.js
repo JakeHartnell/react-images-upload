@@ -174,6 +174,12 @@ export default class App extends React.PureComponent {
                             <td className="text-left">Max image size.</td>
                         </tr>
                         <tr>
+                            <td className="text-left">acceptedImageDimension</td>
+                            <td className="text-left">Object</td>
+                            <td className="text-left">-</td>
+                            <td className="text-left">Supported dimensions, ex. {"{exact:{w:100,h:300}}"} (only images of 100px width and 300px height), it supports 'exact', 'lessThan' and 'greaerThan'</td>
+                        </tr>
+                        <tr>
                             <td className="text-left">fileSizeError</td>
                             <td className="text-left">String</td>
                             <td className="text-left">" file size is too big"	</td>
@@ -184,6 +190,12 @@ export default class App extends React.PureComponent {
                             <td className="text-left">String</td>
                             <td className="text-left">" is not supported file extension"</td>
                             <td className="text-left">Label for file extension error message.</td>
+                        </tr>
+                        <tr>
+                            <td className="text-left">fileDimensionError</td>
+                            <td className="text-left">String</td>
+                            <td className="text-left">" image dimensions are different than expected"</td>
+                            <td className="text-left">Label for image dimensions error message.</td>
                         </tr>
                         <tr>
                             <td className="text-left">errorClass</td>

@@ -14,7 +14,8 @@ const styles = {
 
 const ERROR = {
   NOT_SUPPORTED_EXTENSION: 'NOT_SUPPORTED_EXTENSION',
-  FILESIZE_TOO_LARGE: 'FILESIZE_TOO_LARGE'
+  FILESIZE_TOO_LARGE: 'FILESIZE_TOO_LARGE',
+  IMAGE_DIMENSION_NOT_MATCH: 'IMAGE_DIMENSION_NOT_MATCH'
 }
 
 class ReactImageUploadComponent extends React.Component {
@@ -54,13 +55,56 @@ class ReactImageUploadComponent extends React.Component {
     return new RegExp(pattern, 'i').test(fileName);
   }
 
+  getImageDimension(file) {
+
+    let { acceptedImageDimension } = this.props;
+    
+    return new Promise ((resolved) => {
+      var i = new Image()
+      i.onload = () => {
+        console.log({w: i.width, h: i.height})
+
+        if(acceptedImageDimension.lessThan) {
+          let w = acceptedImageDimension.lessThan.w;
+          let h = acceptedImageDimension.lessThan.h;
+
+          if(w && i.width>=w) { resolved(false); }
+          if(h && i.height>=h) { resolved(false); }
+        }
+
+        if(acceptedImageDimension.exact) {
+          let w = acceptedImageDimension.exact.w;
+          let h = acceptedImageDimension.exact.h;
+
+          if(w && i.width!==w) { resolved(false); }
+          if(h && i.height!==h) { resolved(false); }
+        }
+
+        if(acceptedImageDimension.greaterThan) {
+          let w = acceptedImageDimension.greaterThan.w;
+          let h = acceptedImageDimension.greaterThan.h;
+
+          if(w && i.width<=w) { resolved(false); }
+          if(h && i.height<=h) { resolved(false); }
+        }
+        
+        resolved(true);
+      };
+      i.src = file
+    })
+  }
+
   /*
    Handle file validation
    */
   onDropFile(e) {
     const files = e.target.files;
+    const allDimensionPromises = [];
     const allFilePromises = [];
     const fileErrors = [];
+
+    let { acceptedImageDimension } = this.props;
+    const useDimensionRestriction = acceptedImageDimension.exact || acceptedImageDimension.greaterThan || acceptedImageDimension.lessThan;
 
     // Iterate over all uploaded files
     for (let i = 0; i < files.length; i++) {
@@ -99,12 +143,45 @@ class ReactImageUploadComponent extends React.Component {
       const files = singleImage?[]:this.state.files.slice();
 
       newFilesData.forEach(newFileData => {
-        dataURLs.push(newFileData.dataURL);
-        files.push(newFileData.file);
+
+        // If it has dimension restriction first read all image dimension and after that if it pass the file
+        // is added to the readFile promises
+        if(useDimensionRestriction) {
+          allDimensionPromises.push(
+            this.getImageDimension(newFileData.dataURL).then(acceptedImageDimension => {
+              console.log('Termina promesa con',acceptedImageDimension);
+
+              if(acceptedImageDimension) {
+                dataURLs.push(newFileData.dataURL);
+                files.push(newFileData.file);
+              }
+              else {
+                let fileError = {
+                  name: newFileData.file.name,
+                  type: ERROR.IMAGE_DIMENSION_NOT_MATCH
+                };              
+                fileErrors.push(fileError);
+              }
+            })
+          );          
+        }
+        else {
+          dataURLs.push(newFileData.dataURL);
+          files.push(newFileData.file);
+        }
       });
 
-      this.setState({pictures: dataURLs, files: files});
-    });
+      if(useDimensionRestriction) {
+        console.log('Termina ejecucion funcion',);
+        Promise.all(allDimensionPromises).then((params) => {
+          console.log('Termina todo',params);
+          this.setState({pictures: dataURLs, files: files, fileErrors});
+        });
+      } 
+      else {
+        this.setState({pictures: dataURLs, files: files});
+      }
+    });    
   }
 
   onUploadClick(e) {
@@ -144,6 +221,15 @@ class ReactImageUploadComponent extends React.Component {
     });
   }
 
+  getRenderErrorMessage(type) {
+    switch (type) {
+      case ERROR.FILESIZE_TOO_LARGE : return this.props.fileSizeError;
+      case ERROR.NOT_SUPPORTED_EXTENSION : return this.props.fileTypeError;
+      case ERROR.IMAGE_DIMENSION_NOT_MATCH : return this.props.fileDimensionError;
+      default: return "Unknown error";        
+    }
+  }
+
   /*
    Check if any errors && render
    */
@@ -152,7 +238,7 @@ class ReactImageUploadComponent extends React.Component {
     return fileErrors.map((fileError, index) => {
       return (
         <div className={'errorMessage ' + this.props.errorClass} key={index} style={this.props.errorStyle}>
-          * {fileError.name} {fileError.type === ERROR.FILESIZE_TOO_LARGE ? this.props.fileSizeError: this.props.fileTypeError}
+          * {fileError.name} {this.getRenderErrorMessage(fileError.type)}
         </div>
       );
     });
@@ -261,6 +347,8 @@ ReactImageUploadComponent.defaultProps = {
   labelClass: "",
   imgExtension: ['.jpg', '.jpeg', '.gif', '.png'],
   maxFileSize: 5242880,
+  acceptedImageDimension: {},
+  fileDimensionError: " image dimensions are different than expected",
   fileSizeError: " file size is too big",
   fileTypeError: " is not a supported file extension",
   errorClass: "",
