@@ -86,8 +86,10 @@ export default App;
 |   labelClass    |  string  |                 -                  | Class name for the label                                      |
 |  imgExtension   |  Array   |  ['.jpg', '.gif', '.png', '.gif']  | Supported image extension (will use in the image validation). |
 |   maxFileSize   |  Number  |              5242880               | Max image size.                                               |
+|   acceptedImageDimension    |  Object  |                 -                                | Supported dimensions, ex. {exact:{w:100,h:300}} (only images of 100px width and 300px height), it supports 'exact', 'lessThan' and 'greaterThan' |
 |  fileSizeError  |  String  |      " file size is too big"       | Label for file size error message.                            |
 |  fileTypeError  |  String  | " is not supported file extension" | Label for file extension error message.                       |
+|  fileDimensionError         |  String  | " image dimensions are different than expected"  | Label for image dimensions error message.                     |
 |   errorClass    |  String  |                 -                  | Class for error messages                                      |
 |   errorStyle    |  Object  |                 -                  | Inline styles for errors                                      |
 |   singleImage   | Boolean  |               false                | Upload one single image                                       |
