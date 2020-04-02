@@ -62,8 +62,6 @@ class ReactImageUploadComponent extends React.Component {
     return new Promise ((resolved) => {
       var i = new Image()
       i.onload = () => {
-        console.log({w: i.width, h: i.height})
-
         if(acceptedImageDimension.lessThan) {
           let w = acceptedImageDimension.lessThan.w;
           let h = acceptedImageDimension.lessThan.h;
@@ -149,8 +147,7 @@ class ReactImageUploadComponent extends React.Component {
         if(useDimensionRestriction) {
           allDimensionPromises.push(
             this.getImageDimension(newFileData.dataURL).then(acceptedImageDimension => {
-              console.log('Termina promesa con',acceptedImageDimension);
-
+              
               if(acceptedImageDimension) {
                 dataURLs.push(newFileData.dataURL);
                 files.push(newFileData.file);
@@ -172,9 +169,7 @@ class ReactImageUploadComponent extends React.Component {
       });
 
       if(useDimensionRestriction) {
-        console.log('Termina ejecucion funcion',);
         Promise.all(allDimensionPromises).then((params) => {
-          console.log('Termina todo',params);
           this.setState({pictures: dataURLs, files: files, fileErrors});
         });
       } 
