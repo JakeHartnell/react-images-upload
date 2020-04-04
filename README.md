@@ -69,28 +69,31 @@ export default App;
 
 |    parameter    |   type   |              default               | description                                                   |
 | :-------------: | :------: | :--------------------------------: | :------------------------------------------------------------ |
+|     style       |  Object  |                 -                  | Inline styles for the input.                                  |
 |    className    |  String  |                 -                  | Class name for the input.                                     |
+| fileContainerStyle | Object |                -                  | Inline styles for the file container.                         |
 |    onChange     | Function |                 -                  | On change handler for the input.                              |
+|    onDelete     | Function |                 -                  | On delete handler for the image.                              |
 | buttonClassName |  String  |                 -                  | Class name for upload button.                                 |
 |  buttonStyles   |  Object  |                 -                  | Inline styles for upload button.                              |
 |   withPreview   | Boolean  |               false                | Show preview of selected images.                              |
-|  defaultImages  |  Array   |       ['imgUrl1', 'imgUrl2']       | Pre-populate with default images.                             |
-|     accept      |  String  |         "accept=image/\*"          | Accept attribute for file input.                              |
+|     accept      |  String  |              image/\*              | Accept attribute for file input.                              |
 |      name       |  String  |                 -                  | Input name.                                                   |
 |    withIcon     | Boolean  |                true                | If true, show upload icon on top                              |
 |   buttonText    |  String  |          'Choose images'           | The text that display in the button.                          |
-|   buttonType    |  String  |              'submit'              | The value of the button's "type" attribute.                   |
-|    withLabel    | Boolean  |                true                | Show instruction label                                        |
-|      label      |  String  | 'Max file size: 5mb, accepted: jpg, gif, png |         Label text                                  |
+|   buttonType    |  String  |              'button'              | The value of the button's "type" attribute.                   |
+|    withLabel    | Boolean  |                true                | Show instruction label.                                       |
+|      label      |  String  | 'Max file size: 5mb, accepted: jpg, gif, png |         Label text.                                 |
 |   labelStyles   |  Object  |                 -                  | Inline styles for the label.                                  |
 |   labelClass    |  string  |                 -                  | Class name for the label                                      |
-|  imgExtension   |  Array   |  ['.jpg', '.gif', '.png', '.gif']  | Supported image extension (will use in the image validation). |
+|  imgExtension   |  Array   |  ['.jpg', '.jpeg', '.gif', '.png'] | Supported image extension (will use in the image validation). |
 |   maxFileSize   |  Number  |              5242880               | Max image size.                                               |
 |  fileSizeError  |  String  |      " file size is too big"       | Label for file size error message.                            |
 |  fileTypeError  |  String  | " is not supported file extension" | Label for file extension error message.                       |
 |   errorClass    |  String  |                 -                  | Class for error messages                                      |
 |   errorStyle    |  Object  |                 -                  | Inline styles for errors                                      |
 |   singleImage   | Boolean  |               false                | Upload one single image                                       |
+|  defaultImages  |  Array   |                []                  | Pre-populate with default images.                             |
 
 ### Development
 

@@ -66,6 +66,12 @@ export default class App extends React.PureComponent {
                     </thead>
                     <tbody className="table-hover">
                         <tr>
+                            <td className="text-left">style</td>
+                            <td className="text-left">Object</td>
+                            <td className="text-left">-</td>
+                            <td className="text-left">Inline styles for the input.</td>
+                        </tr>
+                        <tr>
                             <td className="text-left">className</td>
                             <td className="text-left">String</td>
                             <td className="text-left">-</td>
@@ -75,7 +81,7 @@ export default class App extends React.PureComponent {
                             <td className="text-left">fileContainerStyle</td>
                             <td className="text-left">Object</td>
                             <td className="text-left">-</td>
-                            <td className="text-left">Inline styles for file upload container.</td>
+                            <td className="text-left">Inline styles for the file container.</td>
                         </tr>
                         <tr>
                             <td className="text-left">onChange</td>
@@ -104,7 +110,7 @@ export default class App extends React.PureComponent {
                         <tr>
                             <td className="text-left">withPreview</td>
                             <td className="text-left">Boolean</td>
-                            <td className="text-left">true</td>
+                            <td className="text-left">false</td>
                             <td className="text-left">Show preview of selected images.</td>
                         </tr>
                         <tr>
@@ -116,7 +122,7 @@ export default class App extends React.PureComponent {
                         <tr>
                             <td className="text-left">accept</td>
                             <td className="text-left">String</td>
-                            <td className="text-left">"accept=image"</td>
+                            <td className="text-left">image/*</td>
                             <td className="text-left">Accept attribute for file input.</td>
                         </tr>
                         <tr>
@@ -140,14 +146,20 @@ export default class App extends React.PureComponent {
                         <tr>
                             <td className="text-left">buttonType</td>
                             <td className="text-left">String</td>
-                            <td className="text-left">'submit'	</td>
-                            <td className="text-left">The value of the button's type attribute</td>
+                            <td className="text-left">'button'</td>
+                            <td className="text-left">The value of the button's "type" attribute.</td>
                         </tr>
                         <tr>
                             <td className="text-left">withLabel</td>
                             <td className="text-left">Boolean</td>
                             <td className="text-left">true</td>
                             <td className="text-left">Show instruction label</td>
+                        </tr>
+                        <tr>
+                            <td className="text-left">label</td>
+                            <td className="text-left">String</td>
+                            <td className="text-left">Max file size: 5mb, accepted: jpg|gif|png</td>
+                            <td className="text-left">Label text</td>
                         </tr>
                         <tr>
                             <td className="text-left">labelStyles</td>
@@ -170,7 +182,7 @@ export default class App extends React.PureComponent {
                         <tr>
                             <td className="text-left">maxFileSize</td>
                             <td className="text-left">Number</td>
-                            <td className="text-left">5mb </td>
+                            <td className="text-left">5242880</td>
                             <td className="text-left">Max image size.</td>
                         </tr>
                         <tr>
@@ -194,7 +206,7 @@ export default class App extends React.PureComponent {
                         <tr>
                             <td className="text-left">errorStyle</td>
                             <td className="text-left">Object</td>
-                            <td className="text-left">['.jpg', '.gif', '.png', '.gif']</td>
+                            <td className="text-left">-</td>
                             <td className="text-left">Inline styles for errors .</td>
                         </tr>
                         <tr>
@@ -204,10 +216,10 @@ export default class App extends React.PureComponent {
                             <td className="text-left">Limits one image at a time.</td>
                         </tr>
                         <tr>
-                            <td className="text-left">defaultImage</td>
-                            <td className="text-left">String</td>
-                            <td className="text-left">false</td>
-                            <td className="text-left">Image url for the default preview (example an already uploaded image)</td>
+                            <td className="text-left">defaultImages</td>
+                            <td className="text-left">Array</td>
+                            <td className="text-left">[]</td>
+                            <td className="text-left">Pre-populate with default images.</td>
                         </tr>
                     </tbody>
                 </table>

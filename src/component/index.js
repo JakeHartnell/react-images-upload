@@ -245,7 +245,10 @@ class ReactImageUploadComponent extends React.Component {
 }
 
 ReactImageUploadComponent.defaultProps = {
+  style: {},
   className: '',
+  onChange: () => {},
+  onDelete: () => {},
   fileContainerStyle: {},
   buttonClassName: "",
   buttonStyles: {},
@@ -264,10 +267,8 @@ ReactImageUploadComponent.defaultProps = {
   fileSizeError: " file size is too big",
   fileTypeError: " is not a supported file extension",
   errorClass: "",
-  style: {},
   errorStyle: {},
   singleImage: false,
-  onChange: () => {},
   defaultImages: []
 };
 
