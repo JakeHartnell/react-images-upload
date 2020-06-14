@@ -172,12 +172,13 @@ var ReactImageUploadComponent = function (_React$Component) {
     value: function readFile(file) {
       return new Promise(function (resolve, reject) {
         var reader = new FileReader();
+        var timestamp = new Date().getTime();
 
         // Read the image via FileReader API and save image result in state.
         reader.onload = function (e) {
           // Add the file name to the data URL
           var dataURL = e.target.result;
-          dataURL = dataURL.replace(";base64", ';name=' + file.name + ';base64');
+          dataURL = dataURL.replace(";base64", ';name=' + file.name + ';timestamp=' + timestamp + ';base64');
           resolve({ file: file, dataURL: dataURL });
         };
 
