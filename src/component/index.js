@@ -118,12 +118,13 @@ class ReactImageUploadComponent extends React.Component {
   readFile(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
+      let timestamp = new Date().getTime();
 
       // Read the image via FileReader API and save image result in state.
       reader.onload = function (e) {
         // Add the file name to the data URL
         let dataURL = e.target.result;
-        dataURL = dataURL.replace(";base64", `;name=${file.name};base64`);
+        dataURL = dataURL.replace(";base64", `;name=${file.name};timestamp=${timestamp};base64`);          
         resolve({file, dataURL});
       };
 
