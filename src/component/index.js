@@ -41,6 +41,9 @@ class ReactImageUploadComponent extends React.Component {
    Load image at the beggining if defaultImage prop exists
    */
   componentWillReceiveProps(nextProps){
+    if(this.props.singleImage){
+      return;
+    }
     if(nextProps.defaultImages !== this.props.defaultImages){
       this.setState({pictures: nextProps.defaultImages});
     }
