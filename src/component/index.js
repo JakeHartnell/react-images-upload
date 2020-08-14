@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './index.css';
 import FlipMove from 'react-flip-move';
 import UploadIcon from './UploadIcon.svg';
+import EXIF from 'exif-js';
 
 const styles = {
   display: "flex",
@@ -23,7 +24,8 @@ class ReactImageUploadComponent extends React.Component {
     this.state = {
       pictures: [...props.defaultImages],
       files: [],
-      fileErrors: []
+      fileErrors: [],
+      exif: []
     };
     this.inputElement = '';
     this.onDropFile = this.onDropFile.bind(this);
@@ -97,13 +99,14 @@ class ReactImageUploadComponent extends React.Component {
     Promise.all(allFilePromises).then(newFilesData => {
       const dataURLs = singleImage?[]:this.state.pictures.slice();
       const files = singleImage?[]:this.state.files.slice();
+      const exif = singleImage?[]:this.state.exif.slice();
 
       newFilesData.forEach(newFileData => {
         dataURLs.push(newFileData.dataURL);
         files.push(newFileData.file);
+        exif.push(newFileData.exif);
       });
-
-      this.setState({pictures: dataURLs, files: files});
+      this.setState({pictures: dataURLs, files: files, exif: exif});
     });
   }
 
@@ -118,13 +121,18 @@ class ReactImageUploadComponent extends React.Component {
   readFile(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-
+      let exif = [];
+      EXIF.getData(file, function() {
+        exif = EXIF.pretty(this);
+      });
       // Read the image via FileReader API and save image result in state.
       reader.onload = function (e) {
         // Add the file name to the data URL
         let dataURL = e.target.result;
         dataURL = dataURL.replace(";base64", `;name=${file.name};base64`);
-        resolve({file, dataURL});
+
+        
+        resolve({file, dataURL, exif});
       };
 
       reader.readAsDataURL(file);
@@ -140,7 +148,7 @@ class ReactImageUploadComponent extends React.Component {
     const filteredFiles = this.state.files.filter((e, index) => index !== removeIndex);
 
     this.setState({pictures: filteredPictures, files: filteredFiles}, () => {
-      this.props.onChange(this.state.files, this.state.pictures);
+      this.props.onChange(this.state.files, this.state.pictures, this.state.exif);
     });
   }
 

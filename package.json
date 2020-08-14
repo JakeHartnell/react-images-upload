@@ -8,6 +8,7 @@
     "url": "https://github.com/jakehartnell/react-images-upload"
   },
   "dependencies": {
+    "exif-js": "^2.3.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-flip-move": "^3.0.4",

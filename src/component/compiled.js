@@ -24,6 +24,10 @@ var _UploadIcon = require('./UploadIcon.svg');
 
 var _UploadIcon2 = _interopRequireDefault(_UploadIcon);
 
+var _exifJs = require('exif-js');
+
+var _exifJs2 = _interopRequireDefault(_exifJs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -58,7 +62,8 @@ var ReactImageUploadComponent = function (_React$Component) {
     _this.state = {
       pictures: [].concat(_toConsumableArray(props.defaultImages)),
       files: [],
-      fileErrors: []
+      fileErrors: [],
+      exif: []
     };
     _this.inputElement = '';
     _this.onDropFile = _this.onDropFile.bind(_this);
@@ -147,13 +152,14 @@ var ReactImageUploadComponent = function (_React$Component) {
       Promise.all(allFilePromises).then(function (newFilesData) {
         var dataURLs = singleImage ? [] : _this2.state.pictures.slice();
         var files = singleImage ? [] : _this2.state.files.slice();
+        var exif = singleImage ? [] : _this2.state.exif.slice();
 
         newFilesData.forEach(function (newFileData) {
           dataURLs.push(newFileData.dataURL);
           files.push(newFileData.file);
+          exif.push(newFileData.exif);
         });
-
-        _this2.setState({ pictures: dataURLs, files: files });
+        _this2.setState({ pictures: dataURLs, files: files, exif: exif });
       });
     }
   }, {
@@ -172,13 +178,17 @@ var ReactImageUploadComponent = function (_React$Component) {
     value: function readFile(file) {
       return new Promise(function (resolve, reject) {
         var reader = new FileReader();
-
+        var exif = [];
+        _exifJs2.default.getData(file, function () {
+          exif = _exifJs2.default.pretty(this);
+        });
         // Read the image via FileReader API and save image result in state.
         reader.onload = function (e) {
           // Add the file name to the data URL
           var dataURL = e.target.result;
           dataURL = dataURL.replace(";base64", ';name=' + file.name + ';base64');
-          resolve({ file: file, dataURL: dataURL });
+
+          resolve({ file: file, dataURL: dataURL, exif: exif });
         };
 
         reader.readAsDataURL(file);
@@ -205,7 +215,7 @@ var ReactImageUploadComponent = function (_React$Component) {
       });
 
       this.setState({ pictures: filteredPictures, files: filteredFiles }, function () {
-        _this3.props.onChange(_this3.state.files, _this3.state.pictures);
+        _this3.props.onChange(_this3.state.files, _this3.state.pictures, _this3.state.exif);
       });
     }
 
