@@ -55,11 +55,12 @@ var ReactImageUploadComponent = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ReactImageUploadComponent.__proto__ || Object.getPrototypeOf(ReactImageUploadComponent)).call(this, props));
 
-    _this.state = {
+    _this.defaultState = {
       pictures: [].concat(_toConsumableArray(props.defaultImages)),
       files: [],
       fileErrors: []
     };
+    _this.state = _this.defaultState;
     _this.inputElement = '';
     _this.onDropFile = _this.onDropFile.bind(_this);
     _this.onUploadClick = _this.onUploadClick.bind(_this);
@@ -71,12 +72,20 @@ var ReactImageUploadComponent = function (_React$Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       if (prevState.files !== this.state.files) {
+
+        // Skip blank changes because its not keeping state (clearing)
+        if (this.props.keepState !== true && this.state.files.length < 1) return;
+
         this.props.onChange(this.state.files, this.state.pictures);
+
+        if (this.props.keepState !== true) {
+          this.setState(this.defaultState);
+        }
       }
     }
 
     /*
-     Load image at the beggining if defaultImage prop exists
+     Load image at the beginning if defaultImage prop exists
      */
 
   }, {
@@ -384,7 +393,8 @@ ReactImageUploadComponent.defaultProps = {
   errorStyle: {},
   singleImage: false,
   onChange: function onChange() {},
-  defaultImages: []
+  defaultImages: [],
+  keepState: true
 };
 
 ReactImageUploadComponent.propTypes = {
@@ -412,7 +422,8 @@ ReactImageUploadComponent.propTypes = {
   errorClass: _propTypes2.default.string,
   errorStyle: _propTypes2.default.object,
   singleImage: _propTypes2.default.bool,
-  defaultImages: _propTypes2.default.array
+  defaultImages: _propTypes2.default.array,
+  keepState: _propTypes2.default.bool
 };
 
 exports.default = ReactImageUploadComponent;
