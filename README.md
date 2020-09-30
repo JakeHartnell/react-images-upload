@@ -91,6 +91,7 @@ export default App;
 |   errorClass    |  String  |                 -                  | Class for error messages                                      |
 |   errorStyle    |  Object  |                 -                  | Inline styles for errors                                      |
 |   singleImage   | Boolean  |               false                | Upload one single image                                       |
+|   keepState     | Boolean  |               true                 | Keep state after triggering onChange                          |
 
 ### Development
 
