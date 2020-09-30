@@ -67,6 +67,7 @@ class App extends React.Component {
 | errorClass | String | - | Class for error messages |
 | errorStyle | Object | - | Inline styles for errors |
 | singleImage | Boolean | false | If true, only a single image can be selected |
+| keepState | Boolean | true | If false, will clear state after each trigger to onChange |
 
 ### License
 MIT

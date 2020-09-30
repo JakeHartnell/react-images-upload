@@ -401,6 +401,7 @@ ReactImageUploadComponent.propTypes = {
   style: _propTypes2.default.object,
   fileContainerStyle: _propTypes2.default.object,
   className: _propTypes2.default.string,
+  keepState: _propTypes2.default.bool,
   onChange: _propTypes2.default.func,
   onDelete: _propTypes2.default.func,
   buttonClassName: _propTypes2.default.string,
@@ -422,8 +423,7 @@ ReactImageUploadComponent.propTypes = {
   errorClass: _propTypes2.default.string,
   errorStyle: _propTypes2.default.object,
   singleImage: _propTypes2.default.bool,
-  defaultImages: _propTypes2.default.array,
-  keepState: _propTypes2.default.bool
+  defaultImages: _propTypes2.default.array
 };
 
 exports.default = ReactImageUploadComponent;
