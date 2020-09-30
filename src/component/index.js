@@ -20,11 +20,12 @@ const ERROR = {
 class ReactImageUploadComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.defaultState = {
       pictures: [...props.defaultImages],
       files: [],
       fileErrors: []
     };
+    this.state = this.defaultState;
     this.inputElement = '';
     this.onDropFile = this.onDropFile.bind(this);
     this.onUploadClick = this.onUploadClick.bind(this);
@@ -32,13 +33,23 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    if(prevState.files !== this.state.files){
+    if (prevState.files !== this.state.files){
+
+      // Skip blank changes because its not keeping state (clearing)
+      if (this.props.keepState !== true && this.state.files.length < 1)
+         return;
+
       this.props.onChange(this.state.files, this.state.pictures);
+
+      if (this.props.keepState !== true) {
+          this.setState(this.defaultState);
+      }
+
     }
   }
 
   /*
-   Load image at the beggining if defaultImage prop exists
+   Load image at the beginning if defaultImage prop exists
    */
   componentWillReceiveProps(nextProps){
     if(nextProps.defaultImages !== this.props.defaultImages){
@@ -268,7 +279,8 @@ ReactImageUploadComponent.defaultProps = {
   errorStyle: {},
   singleImage: false,
   onChange: () => {},
-  defaultImages: []
+  defaultImages: [],
+  keepState: true
 };
 
 ReactImageUploadComponent.propTypes = {
@@ -296,7 +308,8 @@ ReactImageUploadComponent.propTypes = {
   errorClass: PropTypes.string,
   errorStyle: PropTypes.object,
   singleImage: PropTypes.bool,
-  defaultImages: PropTypes.array
+  defaultImages: PropTypes.array,
+  keepState: PropTypes.bool
 };
 
 export default ReactImageUploadComponent;

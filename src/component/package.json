@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "react": "^16.12.0",
-    "react-flip-move": "^3.0.4"
+    "react-flip-move": "^3.0.4",
+    "react-images-upload": "https://github.com/khai93/react-images-upload.git#fix/save-state",
+    "react-images-upload-demo": "https://github.com/khai93/react-images-upload.git#fix/save-state"
   },
   "scripts": {
     "prepublishOnly": "npm run transpile",

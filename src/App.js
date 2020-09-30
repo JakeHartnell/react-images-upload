@@ -38,6 +38,11 @@ class App extends React.Component {
 
 
 export default class App extends React.PureComponent {
+
+    onDrop(pictures) {
+        console.log(pictures);
+    }
+
     render() {
         return (
             <div className="page">
@@ -45,7 +50,7 @@ export default class App extends React.PureComponent {
                 <p>Simple component for upload and validate (client side) images with preview built with React.js.</p>
                 <div className="head">Demo</div>
                 <ImageUploader style={{ maxWidth: '500px', margin: "20px auto" }}
-                               withPreview={true} />
+                               keepState={false} onChange={this.onDrop} />
                 <div className="head">Installation</div>
                 <SyntaxHighlighter language='javascript' showLineNumbers={true} style={rainbow}>
                     {steps.one}
