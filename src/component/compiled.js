@@ -14,8 +14,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require('./index.css');
-
 var _reactFlipMove = require('react-flip-move');
 
 var _reactFlipMove2 = _interopRequireDefault(_reactFlipMove);
