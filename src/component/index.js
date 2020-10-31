@@ -63,7 +63,7 @@ class ReactImageUploadComponent extends React.Component {
     const fileErrors = [];
 
     // Iterate over all uploaded files
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length && i < this.props.maxFiles; i++) {
       let file = files[i];
       let fileError = {
         name: file.name,
@@ -261,6 +261,7 @@ ReactImageUploadComponent.defaultProps = {
   labelClass: "",
   imgExtension: ['.jpg', '.jpeg', '.gif', '.png'],
   maxFileSize: 5242880,
+  maxFiles: 99,
   fileSizeError: " file size is too big",
   fileTypeError: " is not a supported file extension",
   errorClass: "",

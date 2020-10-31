@@ -17,6 +17,7 @@ interface Props {
   labelClass?: string
   imgExtension?: string[]
   maxFileSize?: number
+  maxFiles: number,
   fileSizeError?: string
   fileTypeError?: string
   errorClass?: string
