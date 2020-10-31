@@ -86,6 +86,7 @@ export default App;
 |   labelClass    |  string  |                 -                  | Class name for the label                                      |
 |  imgExtension   |  Array   |  ['.jpg', '.gif', '.png', '.gif']  | Supported image extension (will use in the image validation). |
 |   maxFileSize   |  Number  |              5242880               | Max image size.                                               |
+|   maxFiles      |  Number  |                 99                 | Max number of files to upload.                                |
 |  fileSizeError  |  String  |      " file size is too big"       | Label for file size error message.                            |
 |  fileTypeError  |  String  | " is not supported file extension" | Label for file extension error message.                       |
 |   errorClass    |  String  |                 -                  | Class for error messages                                      |
