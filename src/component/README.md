@@ -15,7 +15,7 @@ npm install --save react-images-upload
 
 ```javascript
 import React from 'react';
-import ImageUploader from '@geraudwilling/react-images-upload';
+import ImageUploader from 'react-images-upload';
 
 class App extends React.Component {
 
