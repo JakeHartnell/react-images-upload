@@ -112,7 +112,7 @@ var ReactImageUploadComponent = function (_React$Component) {
       var fileErrors = [];
 
       // Iterate over all uploaded files
-      for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < files.length && i < this.props.maxFiles; i++) {
         var file = files[i];
         var fileError = {
           name: file.name
@@ -153,7 +153,11 @@ var ReactImageUploadComponent = function (_React$Component) {
           files.push(newFileData.file);
         });
 
-        _this2.setState({ pictures: dataURLs, files: files });
+        // Slice array if maxLength is reached
+        _this2.setState({
+          pictures: dataURLs.slice(0, _this2.props.maxFiles),
+          files: files.slice(0, _this2.props.maxFiles)
+        });
       });
     }
   }, {
@@ -330,7 +334,7 @@ var ReactImageUploadComponent = function (_React$Component) {
             { className: 'errorsContainer' },
             this.renderErrors()
           ),
-          _react2.default.createElement(
+          this.state.files.length < this.props.maxFiles && _react2.default.createElement(
             'button',
             {
               type: this.props.buttonType,
@@ -378,6 +382,7 @@ ReactImageUploadComponent.defaultProps = {
   imgExtension: ['.jpg', '.jpeg', '.gif', '.png'],
   maxFileSize: 5242880,
   fileSizeError: " file size is too big",
+  maxFiles: 4,
   fileTypeError: " is not a supported file extension",
   errorClass: "",
   style: {},
@@ -408,6 +413,7 @@ ReactImageUploadComponent.propTypes = {
   imgExtension: _propTypes2.default.array,
   maxFileSize: _propTypes2.default.number,
   fileSizeError: _propTypes2.default.string,
+  maxFiles: _propTypes2.default.number,
   fileTypeError: _propTypes2.default.string,
   errorClass: _propTypes2.default.string,
   errorStyle: _propTypes2.default.object,
