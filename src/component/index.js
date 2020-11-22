@@ -63,7 +63,7 @@ class ReactImageUploadComponent extends React.Component {
     const fileErrors = [];
 
     // Iterate over all uploaded files
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length && i < this.props.maxFiles; i++) {
       let file = files[i];
       let fileError = {
         name: file.name,
@@ -103,7 +103,12 @@ class ReactImageUploadComponent extends React.Component {
         files.push(newFileData.file);
       });
 
-      this.setState({pictures: dataURLs, files: files});
+      // Slice array if maxLength is reached
+      this.setState(
+          {
+            pictures: dataURLs.slice(0, this.props.maxFiles),
+            files: files.slice(0, this.props.maxFiles)
+          });
     });
   }
 
@@ -191,12 +196,12 @@ class ReactImageUploadComponent extends React.Component {
 
   renderPreviewPictures() {
     return this.state.pictures.map((picture, index) => {
-      return (
-        <div key={index} className="uploadPictureContainer">
-          <div className="deleteImage" onClick={() => this.removeImage(picture)}>X</div>
-          <img src={picture} className="uploadPicture" alt="preview"/>
-        </div>
-      );
+        return (
+            <div key={index} className="uploadPictureContainer">
+              <div className="deleteImage" onClick={() => this.removeImage(picture)}>X</div>
+              <img src={picture} className="uploadPicture" alt="preview"/>
+            </div>
+        );
     });
   }
 
@@ -220,7 +225,8 @@ class ReactImageUploadComponent extends React.Component {
           <div className="errorsContainer">
             {this.renderErrors()}
           </div>
-          <button
+          {
+            (this.state.files.length < this.props.maxFiles) && <button
             type={this.props.buttonType}
             className={"chooseFileButton " + this.props.buttonClassName}
             style={this.props.buttonStyles}
@@ -228,6 +234,7 @@ class ReactImageUploadComponent extends React.Component {
           >
             {this.props.buttonText}
           </button>
+          }
           <input
             type="file"
             ref={input => this.inputElement = input}
@@ -262,6 +269,7 @@ ReactImageUploadComponent.defaultProps = {
   imgExtension: ['.jpg', '.jpeg', '.gif', '.png'],
   maxFileSize: 5242880,
   fileSizeError: " file size is too big",
+  maxFiles: 99,
   fileTypeError: " is not a supported file extension",
   errorClass: "",
   style: {},
@@ -292,6 +300,7 @@ ReactImageUploadComponent.propTypes = {
   imgExtension: PropTypes.array,
   maxFileSize: PropTypes.number,
   fileSizeError: PropTypes.string,
+  maxFiles: PropTypes.number,
   fileTypeError: PropTypes.string,
   errorClass: PropTypes.string,
   errorStyle: PropTypes.object,

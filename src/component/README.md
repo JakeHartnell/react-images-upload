@@ -1,4 +1,7 @@
 # Images uploader UI component
+This is a fork of [react-images-upload](https://github.com/JakeHartnell/react-images-upload).
+We added the *maxFiles* prop to limit the amount of uploaded images.
+
 Simple component for upload and validate (client side) images with preview built with React.js.
 This package use [react-flip-move](https://github.com/joshwcomeau/react-flip-move) for animate the file preview images.
 
@@ -67,6 +70,7 @@ class App extends React.Component {
 | errorClass | String | - | Class for error messages |
 | errorStyle | Object | - | Inline styles for errors |
 | singleImage | Boolean | false | If true, only a single image can be selected |
+|   maxFiles      |  Number  |                 99                 | Max number of files to upload.                                |
 
 ### License
 MIT
