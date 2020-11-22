@@ -24,5 +24,6 @@ interface Props {
   singleImage?: boolean
   style?: object
   defaultImages?: string[]
+  maxFiles: number
 }
 export default class ReactImageUploadComponent extends Component<Props> { }

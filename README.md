@@ -1,5 +1,6 @@
 # Images uploader UI component
-
+This is a fork of [react-images-upload](https://github.com/JakeHartnell/react-images-upload).
+We added the *maxFiles* prop to limit the amount of uploaded images.
 Simple component for upload and validate (client side) images with preview built with React.js.
 This package use ['react-flip-move'](https://github.com/joshwcomeau/react-flip-move) for animate the file preview images.
 
@@ -86,7 +87,8 @@ export default App;
 |   labelClass    |  string  |                 -                  | Class name for the label                                      |
 |  imgExtension   |  Array   |  ['.jpg', '.gif', '.png', '.gif']  | Supported image extension (will use in the image validation). |
 |   maxFileSize   |  Number  |              5242880               | Max image size.                                               |
-|  fileSizeError  |  String  |      " file size is too big"       | Label for file size error message.                            |
+|  fileSizeError  |  String  |      " file size is too big"       | Label for file size error message.           
+|   maxFiles      |  Number  |                 99                 | Max number of files to upload.                                |
 |  fileTypeError  |  String  | " is not supported file extension" | Label for file extension error message.                       |
 |   errorClass    |  String  |                 -                  | Class for error messages                                      |
 |   errorStyle    |  Object  |                 -                  | Inline styles for errors                                      |

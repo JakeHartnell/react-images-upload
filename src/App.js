@@ -29,6 +29,7 @@ class App extends React.Component {
                 buttonText='Choose images'
                 onChange={this.onDrop}
                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFiles={4}
                 maxFileSize={5242880}
             />
         );
@@ -208,6 +209,12 @@ export default class App extends React.PureComponent {
                             <td className="text-left">String</td>
                             <td className="text-left">false</td>
                             <td className="text-left">Image url for the default preview (example an already uploaded image)</td>
+                        </tr>
+                        <tr>
+                            <td className="text-left">maxFiles</td>
+                            <td className="text-left">number</td>
+                            <td className="text-left">99</td>
+                            <td className="text-left">Limit the amount of uploaded images.</td>
                         </tr>
                     </tbody>
                 </table>
