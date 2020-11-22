@@ -382,7 +382,7 @@ ReactImageUploadComponent.defaultProps = {
   imgExtension: ['.jpg', '.jpeg', '.gif', '.png'],
   maxFileSize: 5242880,
   fileSizeError: " file size is too big",
-  maxFiles: 4,
+  maxFiles: 99,
   fileTypeError: " is not a supported file extension",
   errorClass: "",
   style: {},
