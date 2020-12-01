@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,21 +6,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = require('prop-types');
+var _propTypes = require("prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require('./index.css');
+require("./index.css");
 
-var _reactFlipMove = require('react-flip-move');
+var _reactFlipMove = require("react-flip-move");
 
 var _reactFlipMove2 = _interopRequireDefault(_reactFlipMove);
 
-var _UploadIcon = require('./UploadIcon.svg');
+var _UploadIcon = require("./UploadIcon.svg");
 
 var _UploadIcon2 = _interopRequireDefault(_UploadIcon);
 
@@ -43,8 +43,9 @@ var styles = {
 };
 
 var ERROR = {
-  NOT_SUPPORTED_EXTENSION: 'NOT_SUPPORTED_EXTENSION',
-  FILESIZE_TOO_LARGE: 'FILESIZE_TOO_LARGE'
+  NOT_SUPPORTED_EXTENSION: "NOT_SUPPORTED_EXTENSION",
+  FILESIZE_TOO_LARGE: "FILESIZE_TOO_LARGE",
+  MAX_COUNT_REACHED: "MAX_COUNT_REACHED"
 };
 
 var ReactImageUploadComponent = function (_React$Component) {
@@ -60,7 +61,7 @@ var ReactImageUploadComponent = function (_React$Component) {
       files: [],
       fileErrors: []
     };
-    _this.inputElement = '';
+    _this.inputElement = "";
     _this.onDropFile = _this.onDropFile.bind(_this);
     _this.onUploadClick = _this.onUploadClick.bind(_this);
     _this.triggerFileUpload = _this.triggerFileUpload.bind(_this);
@@ -68,7 +69,7 @@ var ReactImageUploadComponent = function (_React$Component) {
   }
 
   _createClass(ReactImageUploadComponent, [{
-    key: 'componentDidUpdate',
+    key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       if (prevState.files !== this.state.files) {
         this.props.onChange(this.state.files, this.state.pictures);
@@ -80,7 +81,7 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'componentWillReceiveProps',
+    key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.defaultImages !== this.props.defaultImages) {
         this.setState({ pictures: nextProps.defaultImages });
@@ -92,10 +93,10 @@ var ReactImageUploadComponent = function (_React$Component) {
     */
 
   }, {
-    key: 'hasExtension',
+    key: "hasExtension",
     value: function hasExtension(fileName) {
-      var pattern = '(' + this.props.imgExtension.join('|').replace(/\./g, '\\.') + ')$';
-      return new RegExp(pattern, 'i').test(fileName);
+      var pattern = "(" + this.props.imgExtension.join("|").replace(/\./g, "\\.") + ")$";
+      return new RegExp(pattern, "i").test(fileName);
     }
 
     /*
@@ -103,7 +104,7 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'onDropFile',
+    key: "onDropFile",
     value: function onDropFile(e) {
       var _this2 = this;
 
@@ -113,6 +114,10 @@ var ReactImageUploadComponent = function (_React$Component) {
 
       // Iterate over all uploaded files
       for (var i = 0; i < files.length; i++) {
+        if (i < this.props.maxFileCount) {
+          break;
+        }
+
         var file = files[i];
         var fileError = {
           name: file.name
@@ -157,7 +162,7 @@ var ReactImageUploadComponent = function (_React$Component) {
       });
     }
   }, {
-    key: 'onUploadClick',
+    key: "onUploadClick",
     value: function onUploadClick(e) {
       // Fixes https://github.com/JakeHartnell/react-images-upload/issues/55
       e.target.value = null;
@@ -168,7 +173,7 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'readFile',
+    key: "readFile",
     value: function readFile(file) {
       return new Promise(function (resolve, reject) {
         var reader = new FileReader();
@@ -177,7 +182,7 @@ var ReactImageUploadComponent = function (_React$Component) {
         reader.onload = function (e) {
           // Add the file name to the data URL
           var dataURL = e.target.result;
-          dataURL = dataURL.replace(";base64", ';name=' + file.name + ';base64');
+          dataURL = dataURL.replace(";base64", ";name=" + file.name + ";base64");
           resolve({ file: file, dataURL: dataURL });
         };
 
@@ -190,7 +195,7 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'removeImage',
+    key: "removeImage",
     value: function removeImage(picture) {
       var _this3 = this;
 
@@ -214,7 +219,7 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'renderErrors',
+    key: "renderErrors",
     value: function renderErrors() {
       var _this4 = this;
 
@@ -222,11 +227,15 @@ var ReactImageUploadComponent = function (_React$Component) {
 
       return fileErrors.map(function (fileError, index) {
         return _react2.default.createElement(
-          'div',
-          { className: 'errorMessage ' + _this4.props.errorClass, key: index, style: _this4.props.errorStyle },
-          '* ',
+          "div",
+          {
+            className: "errorMessage " + _this4.props.errorClass,
+            key: index,
+            style: _this4.props.errorStyle
+          },
+          "* ",
           fileError.name,
-          ' ',
+          " ",
           fileError.type === ERROR.FILESIZE_TOO_LARGE ? _this4.props.fileSizeError : _this4.props.fileTypeError
         );
       });
@@ -237,10 +246,10 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'renderIcon',
+    key: "renderIcon",
     value: function renderIcon() {
       if (this.props.withIcon) {
-        return _react2.default.createElement('img', { src: _UploadIcon2.default, className: 'uploadIcon', alt: 'Upload Icon' });
+        return _react2.default.createElement("img", { src: _UploadIcon2.default, className: "uploadIcon", alt: "Upload Icon" });
       }
     }
 
@@ -249,11 +258,11 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'renderLabel',
+    key: "renderLabel",
     value: function renderLabel() {
       if (this.props.withLabel) {
         return _react2.default.createElement(
-          'p',
+          "p",
           { className: this.props.labelClass, style: this.props.labelStyles },
           this.props.label
         );
@@ -265,35 +274,38 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'renderPreview',
+    key: "renderPreview",
     value: function renderPreview() {
       return _react2.default.createElement(
-        'div',
-        { className: 'uploadPicturesWrapper' },
+        "div",
+        { className: "uploadPicturesWrapper" },
         _react2.default.createElement(
           _reactFlipMove2.default,
-          { enterAnimation: 'fade', leaveAnimation: 'fade', style: styles },
+          { enterAnimation: "fade", leaveAnimation: "fade", style: styles },
           this.renderPreviewPictures()
         )
       );
     }
   }, {
-    key: 'renderPreviewPictures',
+    key: "renderPreviewPictures",
     value: function renderPreviewPictures() {
       var _this5 = this;
 
       return this.state.pictures.map(function (picture, index) {
         return _react2.default.createElement(
-          'div',
-          { key: index, className: 'uploadPictureContainer' },
+          "div",
+          { key: index, className: "uploadPictureContainer" },
           _react2.default.createElement(
-            'div',
-            { className: 'deleteImage', onClick: function onClick() {
+            "div",
+            {
+              className: "deleteImage",
+              onClick: function onClick() {
                 return _this5.removeImage(picture);
-              } },
-            'X'
+              }
+            },
+            "X"
           ),
-          _react2.default.createElement('img', { src: picture, className: 'uploadPicture', alt: 'preview' })
+          _react2.default.createElement("img", { src: picture, className: "uploadPicture", alt: "preview" })
         );
       });
     }
@@ -303,35 +315,38 @@ var ReactImageUploadComponent = function (_React$Component) {
      */
 
   }, {
-    key: 'triggerFileUpload',
+    key: "triggerFileUpload",
     value: function triggerFileUpload() {
       this.inputElement.click();
     }
   }, {
-    key: 'clearPictures',
+    key: "clearPictures",
     value: function clearPictures() {
       this.setState({ pictures: [] });
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this6 = this;
 
       return _react2.default.createElement(
-        'div',
-        { className: "fileUploader " + this.props.className, style: this.props.style },
+        "div",
+        {
+          className: "fileUploader " + this.props.className,
+          style: this.props.style
+        },
         _react2.default.createElement(
-          'div',
-          { className: 'fileContainer', style: this.props.fileContainerStyle },
+          "div",
+          { className: "fileContainer", style: this.props.fileContainerStyle },
           this.renderIcon(),
           this.renderLabel(),
           _react2.default.createElement(
-            'div',
-            { className: 'errorsContainer' },
+            "div",
+            { className: "errorsContainer" },
             this.renderErrors()
           ),
           _react2.default.createElement(
-            'button',
+            "button",
             {
               type: this.props.buttonType,
               className: "chooseFileButton " + this.props.buttonClassName,
@@ -340,8 +355,8 @@ var ReactImageUploadComponent = function (_React$Component) {
             },
             this.props.buttonText
           ),
-          _react2.default.createElement('input', {
-            type: 'file',
+          _react2.default.createElement("input", {
+            type: "file",
             ref: function ref(input) {
               return _this6.inputElement = input;
             },
@@ -361,7 +376,7 @@ var ReactImageUploadComponent = function (_React$Component) {
 }(_react2.default.Component);
 
 ReactImageUploadComponent.defaultProps = {
-  className: '',
+  className: "",
   fileContainerStyle: {},
   buttonClassName: "",
   buttonStyles: {},
@@ -375,7 +390,7 @@ ReactImageUploadComponent.defaultProps = {
   label: "Max file size: 5mb, accepted: jpg|gif|png",
   labelStyles: {},
   labelClass: "",
-  imgExtension: ['.jpg', '.jpeg', '.gif', '.png'],
+  imgExtension: [".jpg", ".jpeg", ".gif", ".png"],
   maxFileSize: 5242880,
   fileSizeError: " file size is too big",
   fileTypeError: " is not a supported file extension",
