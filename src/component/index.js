@@ -22,7 +22,7 @@ class ReactImageUploadComponent extends React.Component {
     super(props);
     this.state = {
       pictures: [...props.defaultImages],
-      files: [],
+      files: [...props.defaultImages.map(() => {})],
       fileErrors: []
     };
     this.inputElement = '';
@@ -33,7 +33,7 @@ class ReactImageUploadComponent extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot){
     if(prevState.files !== this.state.files){
-      this.props.onChange(this.state.files, this.state.pictures);
+      this.notifyImageChange(this.state.files, this.state.pictures);
     }
   }
 
@@ -42,13 +42,13 @@ class ReactImageUploadComponent extends React.Component {
    */
   componentWillReceiveProps(nextProps){
     if(nextProps.defaultImages !== this.props.defaultImages){
-      this.setState({pictures: nextProps.defaultImages});
+      this.setState({pictures: nextProps.defaultImages, file: nextProps.defaultImages.map(() => {})});
     }
   }
 
   /*
-	 Check file extension (onDropFile)
-	 */
+   Check file extension (onDropFile)
+   */
   hasExtension(fileName) {
     const pattern = '(' + this.props.imgExtension.join('|').replace(/\./g, '\\.') + ')$';
     return new RegExp(pattern, 'i').test(fileName);
@@ -140,8 +140,15 @@ class ReactImageUploadComponent extends React.Component {
     const filteredFiles = this.state.files.filter((e, index) => index !== removeIndex);
 
     this.setState({pictures: filteredPictures, files: filteredFiles}, () => {
-      this.props.onChange(this.state.files, this.state.pictures);
+      this.notifyImageChange(this.state.files, this.state.pictures);
     });
+  }
+
+  /*
+    Notifies image change without undefined files
+  */
+  notifyImageChange(files, pictures){
+    this.props.onChange(files.filter(e=>e), pictures);
   }
 
   /*
@@ -163,7 +170,7 @@ class ReactImageUploadComponent extends React.Component {
    */
   renderIcon() {
     if (this.props.withIcon) {
-      return <img src={UploadIcon} className="uploadIcon"	alt="Upload Icon" />;
+      return <img src={UploadIcon} className="uploadIcon"	alt="Upload Icon" />; 
     }
   }
 
