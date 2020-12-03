@@ -201,7 +201,7 @@ var ReactImageUploadComponent = function (_React$Component) {
         return index !== removeIndex;
       });
       var filteredFiles = this.state.files.filter(function (e, index) {
-        return index !== removeIndex && e;
+        return index !== removeIndex;
       });
 
       this.setState({ pictures: filteredPictures, files: filteredFiles }, function () {
