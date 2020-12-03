@@ -137,7 +137,7 @@ class ReactImageUploadComponent extends React.Component {
   removeImage(picture) {
     const removeIndex = this.state.pictures.findIndex(e => e === picture);
     const filteredPictures = this.state.pictures.filter((e, index) => index !== removeIndex);
-    const filteredFiles = this.state.files.filter((e, index) => index !== removeIndex && e);
+    const filteredFiles = this.state.files.filter((e, index) => index !== removeIndex);
 
     this.setState({pictures: filteredPictures, files: filteredFiles}, () => {
       this.notifyImageChange(this.state.files, this.state.pictures);
