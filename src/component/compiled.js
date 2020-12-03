@@ -57,7 +57,7 @@ var ReactImageUploadComponent = function (_React$Component) {
 
     _this.state = {
       pictures: [].concat(_toConsumableArray(props.defaultImages)),
-      files: [],
+      files: [].concat(_toConsumableArray(props.defaultImages.map(function () {}))),
       fileErrors: []
     };
     _this.inputElement = '';
@@ -71,7 +71,7 @@ var ReactImageUploadComponent = function (_React$Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       if (prevState.files !== this.state.files) {
-        this.props.onChange(this.state.files, this.state.pictures);
+        this.notifyImageChange(this.state.files, this.state.pictures);
       }
     }
 
@@ -83,13 +83,13 @@ var ReactImageUploadComponent = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.defaultImages !== this.props.defaultImages) {
-        this.setState({ pictures: nextProps.defaultImages });
+        this.setState({ pictures: nextProps.defaultImages, file: nextProps.defaultImages.map(function () {}) });
       }
     }
 
     /*
-    Check file extension (onDropFile)
-    */
+     Check file extension (onDropFile)
+     */
 
   }, {
     key: 'hasExtension',
@@ -201,12 +201,24 @@ var ReactImageUploadComponent = function (_React$Component) {
         return index !== removeIndex;
       });
       var filteredFiles = this.state.files.filter(function (e, index) {
-        return index !== removeIndex;
+        return index !== removeIndex && e;
       });
 
       this.setState({ pictures: filteredPictures, files: filteredFiles }, function () {
-        _this3.props.onChange(_this3.state.files, _this3.state.pictures);
+        _this3.notifyImageChange(_this3.state.files, _this3.state.pictures);
       });
+    }
+
+    /*
+      Notifies image change without undefined files
+    */
+
+  }, {
+    key: 'notifyImageChange',
+    value: function notifyImageChange(files, pictures) {
+      this.props.onChange(files.filter(function (e) {
+        return e;
+      }), pictures);
     }
 
     /*
