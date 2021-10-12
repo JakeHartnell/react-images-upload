@@ -38,7 +38,7 @@ class ReactImageUploadComponent extends React.Component {
   }
 
   /*
-   Load image at the beggining if defaultImage prop exists
+   Load image at the beginning if defaultImage prop exists
    */
   componentWillReceiveProps(nextProps){
     if(nextProps.defaultImages !== this.props.defaultImages){
@@ -162,6 +162,10 @@ class ReactImageUploadComponent extends React.Component {
    Render the upload icon
    */
   renderIcon() {
+    if (this.props.withIcon && Object.keys(this.props.customIcon).length !== 0) {
+      return <img src={this.props.customIcon} className="uploadIcon" alt="Upload Icon" />;
+    }
+
     if (this.props.withIcon) {
       return <img src={UploadIcon} className="uploadIcon"	alt="Upload Icon" />;
     }
@@ -253,6 +257,7 @@ ReactImageUploadComponent.defaultProps = {
   accept: "image/*",
   name: "",
   withIcon: true,
+  customIcon: {},
   buttonText: "Choose images",
   buttonType: "button",
   withLabel: true,
@@ -284,6 +289,7 @@ ReactImageUploadComponent.propTypes = {
   accept: PropTypes.string,
   name: PropTypes.string,
   withIcon: PropTypes.bool,
+  customIcon: PropTypes.object,
   buttonText: PropTypes.string,
   withLabel: PropTypes.bool,
   label: PropTypes.string,

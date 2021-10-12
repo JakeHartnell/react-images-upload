@@ -10,6 +10,7 @@ interface Props {
   accept?: string
   name?: string
   withIcon?: boolean
+  customIcon?: object
   buttonText?: string
   withLabel?: boolean
   label?: string
